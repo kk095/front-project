@@ -1,0 +1,7 @@
+@use '../../../color';
+
+
+.home{
+    height: 70vh;
+    background-color: color.$background;
+}

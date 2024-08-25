@@ -1,0 +1,31 @@
+<header>
+    <div class="logo-div">
+        <div class="navlink" (click)="onClickBar(true)"><i class="fas fa-bars"></i></div>
+        <div class="img-div">
+            <img src="../../../assets/images/kurston-logo.png" alt="">
+        </div>
+        <div>
+            <button class="login-btn"><i class="far fa-user-circle"></i> &nbsp; Login</button>
+        </div>
+    </div>
+    <div class="nav-div">
+        <ul>
+            <li (click)="navigation('home')"  [class.active]="activetab=='home'"><i class="fas fa-home"></i> &nbsp;Home</li>
+            <li (click)="navigation('category')" [class.active]="activetab=='category'"><i class="fas fa-th-large"></i> &nbsp;Catagories</li>
+            <li (click)="navigation('about')" [class.active]="activetab=='about'"><i class="fas fa-info"></i> &nbsp; About Us</li>
+            <li (click)="navigation('contact')" [class.active]="activetab=='contact'"><i class="fas fa-globe"></i>&nbsp;Contact Us</li>
+        </ul>
+    </div>
+  
+    <div #mobnav class="dis" [class.mob-nav-div]="isBarClicked">
+        <span class="cancel" (click)="onClickBar(false)"><i class="far fa-times-circle"></i></span>
+        <div class="links">
+            <ul>
+                <li (click)="navigation('home')"  [class.active]="activetab=='home'"><i class="fas fa-home"></i> &nbsp;Home</li>
+                <li (click)="navigation('category')" [class.active]="activetab=='category'"><i class="fas fa-th-large"></i> &nbsp;Catagories</li>
+                <li (click)="navigation('about')" [class.active]="activetab=='about'"><i class="fas fa-info"></i> &nbsp; About Us</li>
+                <li (click)="navigation('contact')" [class.active]="activetab=='contact'"><i class="fas fa-globe"></i>&nbsp;Contact Us</li>
+            </ul>
+        </div>
+    </div>
+</header>
