@@ -2,6 +2,35 @@
 
 
 .home{
-    height: 70vh;
+    height: auto;
     background-color: color.$background;
+}
+
+.slider-div{
+    position: relative;
+    img{
+        width: 100%;
+        height: auto;
+    }
+    .img-txt{
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        color: color.$primary;
+        font-weight: 600;
+        font-size: 70px;
+        opacity: .5;
+        width: 100%;
+        background: rgb(255,215,60);
+        background: linear-gradient(90deg, rgba(255,215,60,1) 6%, rgba(255,236,161,1) 26%, rgba(255,254,248,1) 49%);
+        .txt-div{
+            position: absolute;
+            top: 25%;
+            left: 10%;
+            opacity: 1;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+    }
 }
