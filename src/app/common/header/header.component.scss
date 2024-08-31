@@ -105,7 +105,7 @@ li.active{
         position: fixed;
         top: 0px;
         left: 0;
-        min-height: 100vh;
+        height: 100vh;
         overflow: auto;
         width: 100%;
         background-color:rgba($color:color.$primary, $alpha: .5);

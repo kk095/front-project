@@ -9,6 +9,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
  import { ContactComponent } from './pages/contact/contact.component'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     CoreDataService,
