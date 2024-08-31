@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { CategoryComponent } from './category/category.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -12,10 +13,11 @@ import { ContactComponent } from './contact/contact.component';
     HomeComponent,
     CategoryComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
   ],
   imports: [
     CommonModule,
+    SharedModule
   ]
 })
 export class PagesModule { }
