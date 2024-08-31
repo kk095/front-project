@@ -7,18 +7,22 @@ import { CoreDataService } from './Service/core-data.service';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import {RouterModule} from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+ import { ContactComponent } from './pages/contact/contact.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   providers: [
     CoreDataService,

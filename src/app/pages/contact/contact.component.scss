@@ -1,0 +1,78 @@
+.contact-us-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  
+  .contact-us-form div {
+    margin-bottom: 15px;
+  }
+  
+  .contact-us-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .contact-us-form input,
+  .contact-us-form textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .contact-us-form textarea {
+    resize: vertical;
+  }
+  
+  .contact-us-form button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .contact-us-form button[disabled] {
+    background-color: #cccccc;
+  }
+  
+  @media (max-width: 768px) {
+    .contact-us-form {
+      padding: 15px;
+    }
+  
+    .contact-us-form input,
+    .contact-us-form textarea {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contact-us-form {
+      padding: 10px;
+    }
+  
+    .contact-us-form label {
+      font-size: 14px;
+    }
+  
+    .contact-us-form input,
+    .contact-us-form textarea {
+      font-size: 14px;
+    }
+  
+    .contact-us-form button {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+  }
+  
