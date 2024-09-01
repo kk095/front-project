@@ -7,6 +7,8 @@ import { CoreDataService } from './Service/core-data.service';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import {RouterModule} from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+ import { ContactComponent } from './pages/contact/contact.component'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './pages/pages.module';
@@ -16,6 +18,7 @@ import { PagesModule } from './pages/pages.module';
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,9 @@ import { PagesModule } from './pages/pages.module';
     RouterModule,
     BrowserAnimationsModule,
     SharedModule,
-    PagesModule
+    PagesModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     CoreDataService,

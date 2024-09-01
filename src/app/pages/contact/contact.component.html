@@ -1,1 +1,31 @@
-<p>contact works!</p>
+
+<div class="contact-us-form">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" type="text" placeholder="Your Name">
+        <!-- <div *ngIf="contactForm.get('name').invalid ">
+          Name is required.
+        </div> -->
+      </div>
+  
+      <div>
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" type="email" placeholder="Your Email">
+        <!-- <div *ngIf="contactForm.get('email').invalid">
+          Please enter a valid email.
+        </div> -->
+      </div>
+  
+      <div>
+        <label for="message">Message</label>
+        <textarea id="message" formControlName="message" placeholder="Your Message"></textarea>
+        <!-- <div *ngIf="contactForm.get('message').invalid">
+          Message is required.
+        </div> -->
+      </div>
+  
+      <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+    </form>
+  </div>
+  
