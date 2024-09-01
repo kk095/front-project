@@ -1,20 +1,16 @@
 <!-- data-bs-ride="carousel" -->
-<div id="carouselExampleCaptions" class="carousel slide"  data-bs-pause="false">
+<div id="carouselExampleCaptions" class="carousel slide"  data-bs-pause="false" >
     <div class="carousel-inner">
         <ng-container  *ngFor="let x of imageData; let i = index">
 
             <div class="carousel-item active" *ngIf="i==0" data-bs-interval="2000">
                 <img [src]="x.url" class="d-block w-100"  alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>{{x.title}}</h5>
-                    <p>{{x.des}}</p>
                 </div>
             </div>
             <div class="carousel-item " *ngIf="i!=0" data-bs-interval="2000">
                 <img [src]="x.url" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>{{x.title}}</h5>
-                    <p>{{x.des}}</p>
                 </div>
             </div>
         </ng-container>

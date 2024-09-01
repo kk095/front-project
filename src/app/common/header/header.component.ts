@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataSharedService } from 'src/app/Service/data-shared.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ export class HeaderComponent {
 
   @ViewChild("mobnav") mobdiv:any;
 
-  constructor(private router:Router){
+  constructor(private router:Router,private dataShared:DataSharedService){
 
   }
 

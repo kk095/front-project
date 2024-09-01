@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DataSharedService } from 'src/app/Service/data-shared.service';
 
 @Component({
   selector: 'app-carousel',
@@ -7,17 +8,23 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CarouselComponent implements OnInit {
 
-  @Input()
-  public images:any;
+
 
   public imageData:any=[];
 
-  constructor(){
+  constructor(private DataShared:DataSharedService){
 
   }
 
   ngOnInit() {
-    this.imageData = JSON.parse(this.images);
+    this.getPosters();
+  }
+
+
+  getPosters(){
+    this.DataShared.getPosters().subscribe((res)=>{
+      this.imageData = res;
+    })
   }
 
 }

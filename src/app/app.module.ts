@@ -13,8 +13,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './pages/pages.module';
 
-// import {AngularFireModule} from "@angular/fire/compat"
-// import {AngularFireStorageModule} from "@angular/fire/compat/storage"
+import {AngularFireModule} from "@angular/fire/compat"
+import {AngularFireStorageModule} from "@angular/fire/compat/storage"
+import {AngularFirestoreModule} from "@angular/fire/compat/firestore"
 import { environment } from 'src/environments/environment';
 import { firebaseConfig } from 'src/firebaseconfig';
 
@@ -35,8 +36,9 @@ import { firebaseConfig } from 'src/firebaseconfig';
     PagesModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    // AngularFireModule.initializeApp(firebaseConfig),
-    // AngularFireStorageModule
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireStorageModule
   
   ],
   providers: [

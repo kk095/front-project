@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+ import {AngularFirestore} from "@angular/fire/compat/firestore"
+ import {AngularFireStorage} from "@angular/fire/compat/storage"
+import { DataSharedService } from 'src/app/Service/data-shared.service';
 
 @Component({
   selector: 'app-home',
@@ -7,68 +10,52 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  images = [
-    {
-      url:"../../../assets/images/poster1.jpg",
-      title:"title1",
-      des:"description1"
-    },
-    {
-      url:"https://picsum.photos/id/100/600/300",
-      title:"title -2",
-      des:"description-2"
-    },
-    {
-      url:"https://picsum.photos/id/200/600/300",
-      title:"title-3",
-      des:"description-3"
-    }
-  ]
 
-  public categories=[
-    {
-      id:1,
-      name:"Flow King",
-      url:"../../../assets/images/pump1.png",
-      active:true
-    },
-    {
-      id:2,
-      name:"Shallow Well",
-      url:"../../../assets/images/pump2.png",
-      active:false
-    }
+  public categories=[]
 
-  ]
+  public categoryItems=[];
 
-  public activeCategory={
-      id:1,
-      name:"Flow King",
-      url:"../../../assets/images/pump1.png",
-      active:true
-  }
+  public activeCategory:any;
 
-  public updatedImg:any;
+  public tempUrl:string="";
 
-  constructor(){
+  constructor(private dateShared:DataSharedService){
     
   }
-
+  
   ngOnInit(): void {
-      this.updatedImg = JSON.stringify(this.images)
+    this.getCategories();
+    
   }
   
+  getCategories(){
+      this.dateShared.getCategory().subscribe(data =>{
+        this.categories = data;
+        this.activeCategory = data.filter((x)=>x.active==true)[0];
+        this.getCategoryItems(this.activeCategory);
+      })
+  }
+
+  getCategoryItems(data){
+    this.dateShared.getCategoryItems(data).subscribe((data)=>{
+      console.log(data);
+      this.categoryItems = data;
+    })
+  }
 
   categoryClick(data:any){
     console.log(data);
+    this.getCategoryItems(data);
     this.categories = this.categories.map((x)=>{
       if(x.id==data.id){
-        x.active = true
+        x.active = true;
+        this.activeCategory = x;
       }else{
         x.active = false
       }
       return x
     })
+
   }
 
 
