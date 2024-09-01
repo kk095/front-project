@@ -74,6 +74,7 @@ li.active{
 
 @media screen and (max-width: 600px) {
     .logo-div{
+        z-index: 1000;
         .navlink{
             display: block;
             cursor: pointer;

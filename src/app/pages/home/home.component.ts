@@ -25,6 +25,29 @@ export class HomeComponent implements OnInit {
     }
   ]
 
+  public categories=[
+    {
+      id:1,
+      name:"Flow King",
+      url:"../../../assets/images/pump1.png",
+      active:true
+    },
+    {
+      id:2,
+      name:"Shallow Well",
+      url:"../../../assets/images/pump2.png",
+      active:false
+    }
+
+  ]
+
+  public activeCategory={
+      id:1,
+      name:"Flow King",
+      url:"../../../assets/images/pump1.png",
+      active:true
+  }
+
   public updatedImg:any;
 
   constructor(){
@@ -35,5 +58,18 @@ export class HomeComponent implements OnInit {
       this.updatedImg = JSON.stringify(this.images)
   }
   
+
+  categoryClick(data:any){
+    console.log(data);
+    this.categories = this.categories.map((x)=>{
+      if(x.id==data.id){
+        x.active = true
+      }else{
+        x.active = false
+      }
+      return x
+    })
+  }
+
 
 }
