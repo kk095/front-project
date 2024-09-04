@@ -16,6 +16,7 @@ import { PagesModule } from './pages/pages.module';
 import {AngularFireModule} from "@angular/fire/compat"
 import {AngularFireStorageModule} from "@angular/fire/compat/storage"
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore"
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
 import { firebaseConfig } from 'src/firebaseconfig';
 
@@ -38,7 +39,8 @@ import { firebaseConfig } from 'src/firebaseconfig';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    AngularFireAuthModule
   
   ],
   providers: [
