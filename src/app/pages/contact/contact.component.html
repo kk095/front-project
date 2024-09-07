@@ -1,4 +1,4 @@
-
+<div id="main-contact">
 <div class="contact-us-form">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
       <div>
@@ -19,7 +19,7 @@
   
       <div>
         <label for="message">Message</label>
-        <textarea id="message" formControlName="message" placeholder="Your Message"></textarea>
+        <textarea id="message" formControlName="message" style="height: 100px;" placeholder="Your Message"></textarea>
         <!-- <div *ngIf="contactForm.get('message').invalid">
           Message is required.
         </div> -->
@@ -28,4 +28,4 @@
       <button type="submit" [disabled]="contactForm.invalid">Submit</button>
     </form>
   </div>
-  
+</div>
