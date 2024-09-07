@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CoreDataService } from './Service/core-data.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,17 +8,16 @@ import { CoreDataService } from './Service/core-data.service';
 })
 export class AppComponent {
   title = 'project';
+  public showHeaderFooter=true;
 
-
-  constructor(private coreDataService: CoreDataService){
-
+  constructor(private router:Router){
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.showHeaderFooter = !['/login'].includes(event.urlAfterRedirects);
+      }
+    });
   }
 
 
-  public apiCall(){
-    this.coreDataService.getItem().subscribe((res)=>{
-      console.log(res);
-    })
-  }
 
 }

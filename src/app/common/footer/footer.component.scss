@@ -1,7 +1,9 @@
+ @use '../../../color.scss';
+
 .about-footer {
-    background-color: #2c3e50;
+    background-color: color.$primary;
     color: #ecf0f1;
-    padding: 20px 0;
+    padding: 10px 0;
     text-align: center;
 }
 
@@ -13,6 +15,11 @@
 
 .social-links {
     margin-bottom: 15px;
+    a{
+        color: color.$secondary;
+        :active{
+        }
+    }
 }
 
 .social-links a {

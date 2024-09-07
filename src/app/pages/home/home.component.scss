@@ -3,34 +3,88 @@
 
 .home{
     height: auto;
-    background-color: color.$background;
+    background-color: color.$whitebackground;
 }
 
-.slider-div{
-    position: relative;
-    img{
-        width: 100%;
-        height: auto;
+.c-div{
+    width: 100%;
+    height: auto;
+}
+
+.range-div{
+    margin: 25px 0;
+    background-color: color.$whitebackground;
+    h2{
+        text-align: center;
+        font-size: 2rem;
     }
-    .img-txt{
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        color: color.$primary;
-        font-weight: 600;
-        font-size: 70px;
-        opacity: .5;
-        width: 100%;
-        background: rgb(255,215,60);
-        background: linear-gradient(90deg, rgba(255,215,60,1) 6%, rgba(255,236,161,1) 26%, rgba(255,254,248,1) 49%);
-        .txt-div{
-            position: absolute;
-            top: 25%;
-            left: 10%;
-            opacity: 1;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.range-show{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin:60px 0;
+    .show-div{
+        cursor: pointer;
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        box-shadow: 3px 2px 7px 2px lightgray, inset 3px 3px 7px 0px lightgrey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 50%;
+            height: 50%;
         }
+
     }
+}
+
+.sh-name{
+    position: absolute;
+    bottom: -25px;
+    left: 15px;
+}
+
+.show{
+background: linear-gradient(109.6deg, rgb(255, 219, 47) 11.2%, rgb(244, 253, 0) 100.2%);
+box-shadow: unset;
+}
+
+.list-header{
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    .list-name{
+        font-size: 30px;
+        font-weight: 600;
+    }
+}
+
+.p-card{
+    box-shadow: 0px 0px 8px 5px lightgray;
+    border-radius: 25px !important;
+    overflow: hidden;
+}
+
+.know-more{
+    background-color: color.$primary;
+    color: color.$textcolor;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px 1px lightgray;
+    :hover{
+        background-color: color.$secondary;
+    }
+}
+
+.all-cards{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
 }
