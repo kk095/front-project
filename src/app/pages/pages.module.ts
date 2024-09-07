@@ -17,6 +17,7 @@ import { LoginComponent } from './login/login.component';
     AboutComponent,
     ContactComponent,
     LoginComponent,
+  
   ],
   imports: [
     CommonModule,
