@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataSharedService } from 'src/app/Service/data-shared.service';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent {
-  contactForm: FormGroup;
+export class ContactComponent implements OnInit  {
+  public contactForm: FormGroup;
+  public errorShow: boolean = false;
+  public ContactDetails:any;
+  public showAlert: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private dataService:DataSharedService) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -17,10 +21,37 @@ export class ContactComponent {
     });
   }
 
-  onSubmit() {
+  ngOnInit(): void {
+      this.dataService.getContactDetails().subscribe((res)=>{
+        console.log(res);
+        this.ContactDetails = res[0];
+      })
+  }
+
+  async formSubmit() {
     if (this.contactForm.valid) {
       console.log('Form Submitted', this.contactForm.value);
-      
+      let res = await this.dataService.PostMessage(this.contactForm.value);
+      if(!!res.id){
+        this.showDataSentMessage();
+        this.contactForm.reset();
+      }
+    }else{
+      this.errorShow=true;
     }
+  }
+
+
+  showDataSentMessage(){
+    this.showAlert = true;
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 1500);
+  }
+
+  inputFocus(){
+    console.log("focus input");
+    this.errorShow=false
+    
   }
 }

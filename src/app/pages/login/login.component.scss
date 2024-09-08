@@ -4,34 +4,39 @@
 
 .main-div{
     width: 100%;
-    height: 100Vh;
+    height: 100vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap:10px;
+    gap:20px;
     background-color: color.$secondary;
 }
 
 .img{
-    height: 100%;
-    width: 60%;
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; 
+    box-sizing: border-box;
+    width: 550px;
+    height: 550px;
     img{
-        
-        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
         width: auto;
+        height: auto;
+        object-fit: contain; 
     }
 }
 
 .login-container{
     width: 40%;
-    height: 100%;
-    padding: 10px;
     display: flex;
+    align-items: center;
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
-    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
     h1{
         font-weight: 600;
         
@@ -62,9 +67,6 @@ button{
     padding: 10px 50px;
     color: color.$textcolor;
     box-shadow: 1px 1px 3px 1px rgb(89, 89, 89);
-    &:hover{
-        box-shadow: 1px 1px 6px 2px rgb(89, 89, 89);
-    }
     &:active{
         transform: scale(.9);
     }
@@ -80,7 +82,16 @@ button{
     cursor: pointer;
 }
 
+.err-msg{
+    color: red;
+    font-size: 12px;
+    align-self: flex-start;
+}
 
+button:disabled{
+    opacity: .5;
+    cursor: no-drop;
+}
 
 @media screen  and (min-width:1500px){
     .main-div{
@@ -89,30 +100,11 @@ button{
     }
 }
 
-@media screen  and (max-width:800px){
-    .main-div{
-        justify-content: center;
-        align-items: center;
-        height: auto;
-        min-height: 100vh;
-        overflow: auto;
-
-    }
-
-    .img{
+@media (max-width: 768px) {
+    .img {
         display: none;
     }
     .login-container{
-        width: 100%;
-        height: 100%;
-        min-height: 450px;
-        
+        width: 90%;
     }
-
-    form{
-        height: 100%;
-        width: 100%;
-
-    }
-
 }

@@ -1,3 +1,8 @@
+
 <app-header *ngIf="showHeaderFooter"></app-header>
+
 <router-outlet></router-outlet>
+
+<app-loading *ngIf="loadingService.loading$ | async"></app-loading>
+
 <app-footer *ngIf="showHeaderFooter"></app-footer>

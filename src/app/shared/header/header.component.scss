@@ -90,10 +90,7 @@ li.active{
 
         .login-btn{
             padding: 10px 15px;
-            background-color:unset;
-            color: color.$primary;
-            font-weight: 600;
-       
+            color: color.$textcolor;
         }
 
     }
@@ -112,6 +109,7 @@ li.active{
         background-color:rgba($color:color.$primary, $alpha: .5);
         animation-name: mobnav;
         animation-duration: 1s;
+        z-index: 1000;
         .cancel{
             position: absolute;
             right:10%;

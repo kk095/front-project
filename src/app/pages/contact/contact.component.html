@@ -1,31 +1,43 @@
 <div id="main-contact">
-<div class="contact-us-form">
-    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="name">Name</label>
-        <input id="name" formControlName="name" type="text" placeholder="Your Name">
-        <!-- <div *ngIf="contactForm.get('name').invalid ">
-          Name is required.
-        </div> -->
-      </div>
-  
-      <div>
-        <label for="email">Email</label>
-        <input id="email" formControlName="email" type="email" placeholder="Your Email">
-        <!-- <div *ngIf="contactForm.get('email').invalid">
-          Please enter a valid email.
-        </div> -->
-      </div>
-  
-      <div>
-        <label for="message">Message</label>
-        <textarea id="message" formControlName="message" style="height: 100px;" placeholder="Your Message"></textarea>
-        <!-- <div *ngIf="contactForm.get('message').invalid">
-          Message is required.
-        </div> -->
-      </div>
-  
-      <button type="submit" [disabled]="contactForm.invalid">Submit</button>
-    </form>
+  <div class="contact-banner">
+    <h1>Feel free to contact us whenever you need</h1>
+    <p>Got a question, feedback, or just want to chat? We're all ears and ready to assist you. Feel free to Contact out to us on Customer Support number. We’re here for you!</p>
+    <button><i class="fas fa-phone-alt"></i> &nbsp; {{ContactDetails.phone}}</button>
+    <button><i class="fas fa-envelope"></i> &nbsp;{{ContactDetails.email}}</button>
+    <button><i class="fas fa-map-marker-alt"></i> &nbsp; {{ContactDetails.address}}</button>
   </div>
+
+  <div class="con-form">
+   
+      <form [formGroup]="contactForm" >
+        <div *ngIf="errorShow">
+          <span  *ngIf="contactForm.controls?.['name'].invalid" style="color: red;">Name field is required</span><br>
+          <span  *ngIf="contactForm.controls?.['email'].errors?.['required']" style="color: red;">Email field is required</span><br>
+          <span  *ngIf="contactForm.controls?.['email'].invalid" style="color: red;">Enter Valid Email Address</span><br>
+          <span  *ngIf="contactForm.controls?.['message'].invalid" style="color: red;">message field is required</span><br>
+        </div>
+          <div *ngIf="showAlert" class="alert alert-success" role="alert">
+            Message Sent to us Successfully !
+          </div>
+        <h3>Send Your Thoughts!</h3>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" (focus)="inputFocus()" formControlName="name" id="floatingInput" placeholder="Enter Your Name">
+          <label for="floatingInput">Name <span style="color: red;">*</span></label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" (focus)="inputFocus()" formControlName="email" id="floatingInput" placeholder="name@example.com">
+          <label for="floatingInput">Email address <span style="color: red;">*</span></label>
+        </div>
+        <div class="form-floating">
+          <textarea class="form-control" (focus)="inputFocus()"  formControlName="message" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"></textarea>
+          <label for="floatingTextarea2">What you Want to Say <span style="color: red;">*</span></label>
+        </div>
+        <button (click)="formSubmit()">Send Us</button>
+      </form>
+    <div class="con-img">
+      <img src="../../../assets/images/contact1.png" alt="kurston contact img">
+    </div>
+  </div>
+
+  <app-leaflet-map></app-leaflet-map>
 </div>

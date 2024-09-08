@@ -88,3 +88,10 @@ box-shadow: unset;
     align-items: center;
     flex-wrap: wrap;
 }
+
+
+@media screen and (max-width: 768px){
+    .card{
+        width:13rem !important;
+    }
+}

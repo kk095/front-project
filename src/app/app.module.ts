@@ -3,11 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './common/header/header.component';
-import { FooterComponent } from './common/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
 import {RouterModule} from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-//  import { ContactComponent } from './pages/contact/contact.component'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './pages/pages.module';
@@ -22,9 +21,6 @@ import { firebaseConfig } from 'src/firebaseconfig';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    // ContactComponent
   ],
   imports: [
     BrowserModule,

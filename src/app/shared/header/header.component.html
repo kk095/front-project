@@ -5,7 +5,9 @@
             <img src="../../../assets/images/kurston-logo.png" alt="">
         </div>
         <div>
-            <button class="login-btn" (click)="navigation('login')"><i class="far fa-user-circle"></i> &nbsp; Login</button>
+            <button *ngIf="dataShared.loggedInUser.email==null" class="login-btn" (click)="navigation('login')"><i class="far fa-user-circle"></i> &nbsp; Login</button>
+            <button *ngIf="dataShared.loggedInUser.email!=null&&dataShared.loggedInUser.name==null" class="login-btn" (click)="logout()">Unkown</button>
+            <button *ngIf="dataShared.loggedInUser.name!=null" class="login-btn" (click)="logout()">{{dataShared.loggedInUser.name}}</button>
         </div>
     </div>
     <div class="nav-div">

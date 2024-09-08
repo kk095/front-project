@@ -2,38 +2,64 @@
   <img
     class="about-img"
     src="../../assets/images/aboutposter.jpg"
-    alt="Network Issue"
+    alt="kruston about img"
   />
-  <!-- <div class="about-text">About Us</div> -->
 </div>
 <div class="about-exp">
-  <div
-    style="display: flex; flex-direction: row; justify-content: space-evenly"
-  >
+  <div class="para-img">
     <img
-      id="animated-logo"
-      style="width: 200px; height: 200px; margin-top: 10px"
-      src="../../assets/images/motor-logo-modified.png"
-      alt=""
+    id="animated-logo"
+    src="../../assets/images/signup.png"
+    alt="about img"
     />
-    <div>
-      <h4>We are no. 1 motor pump brand in</h4>
-      <h4>in NIT Faridabad</h4>
-      <div style="margin-top: 30px; width: 500px">
+  </div>
+    <div class="para-txt">
+      <h1>We are no.1 Motor Pump Brand</h1>
+      <h1>in NIT Faridabad</h1>
         <p>
-          We are known for our highly satisfactory services, consistently
-          exceeding our clients' expectations. With nearly 20 years in the
-          market, we have been delivering excellence through our innovative
-          products and dedicated services. Our commitment to quality and
-          customer satisfaction has earned us a trusted reputation. Over the
-          years, we have built strong relationships with our customers, driven
-          by our passion for excellence and continuous improvement. Our
-          experienced team is always ready to go the extra mile to ensure that
-          every project is a success. We are proud to be a leading name in the
-          industry, setting benchmarks with our cutting-edge solutions and
-          unparalleled service standards.
+          {{aboutUs.p1}}
         </p>
-      </div>
+        <p>
+         {{aboutUs.p2}}
+        </p>
+        <div class="show-highlight">
+          <div class="highlight">
+            <div class="show-icon">
+              <img src="../../../assets/images/real.png" alt="kurston customer support">
+            </div>
+            <p>
+              100% Genuine Products
+            </p>
+          </div>
+          <div class="highlight">
+            <div class="show-icon">
+              <img src="../../../assets/images/best.png" alt="kurston customer support">
+            </div>
+            <p>
+              Best in Bussiness
+            </p>
+          </div>
+          <div class="highlight">
+            <div class="show-icon">
+              <img src="../../../assets/images/support-worker.png" alt="kurston customer support">
+            </div>
+            <p>
+              24*7 Hours Customer Service
+            </p>
+          </div>
+        </div>
+    </div>
+</div>
+<h1 style="text-align: center; font-weight: 600; font-size: 40px; margin: 20px 0;">Our Review</h1>
+<div class="reviews">
+  <div class="review" *ngFor="let x of reviews;let i=index">
+    <p>{{x.review}}</p>
+    <div class="person">
+      <img src="../../../assets/images/contact us.png" alt=" kurston review person image">
+      <p>{{x.name}}</p>
+    </div>
+    <div>
     </div>
   </div>
+
 </div>

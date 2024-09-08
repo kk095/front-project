@@ -24,6 +24,7 @@ export class CarouselComponent implements OnInit {
   getPosters(){
     this.DataShared.getPosters().subscribe((res)=>{
       this.imageData = res;
+      console.log(this.imageData);
     })
   }
 

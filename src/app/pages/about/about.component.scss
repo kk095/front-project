@@ -1,3 +1,5 @@
+@use '../../../color';
+
 .about-us {
     width: 100%;
     position: relative;
@@ -9,54 +11,129 @@
     height: auto; 
   }
   
-  .about-text {
-    position: absolute;
-    top: 10%; 
-    left: 80%; 
-    transform: translate(-50%, -50%);
-    color: white; 
-    font-size: 50px; 
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
-    text-align: center;
-    width: auto; 
-    white-space: nowrap; 
-  }
   .about-exp{
-    padding: 20px; 
-    border-radius: 5px; 
-    color: white;
-    height: 400px;
-    
-    h4{
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        font-size: 35px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px 10px 0px ;
+    width: 100%;
+  }
+
+  .para-img{
+    width: 40%;
+    height: 40vw;
+    img{
+      width: 100%;
+      height: auto;
+      object-fit: contain;
     }
-    background: rgb(5,5,5);
-background: linear-gradient(270deg, rgba(5,5,5,1) 0%, rgba(119,119,121,1) 21%, rgba(252,254,255,1) 100%);
   }
 
- 
-
-#animated-logo {
-  width: 200px;
-  height: 200px;
-  animation: zoomInOut 3s infinite;
-}
-
-@keyframes zoomInOut {
-  0% {
-      transform: scale(1);
+  .para-txt{
+    width: 60%;
+    padding: 10px;
+    h1{
+      font-weight: 600;
+      font-size: 3vw;
+      line-height: 60px;
+    }
   }
-  50% {
-      transform: scale(1.2);
+
+
+  .show-highlight{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
   }
-  100% {
-      transform: scale(1);
+
+  .highlight{
+    width: 30%;
+    p{
+      font-weight: 600;
+    }
   }
-}
+  .show-icon{
+    width: 100px;
+    height: 100px;
+    img{
+      width: 100%;
+      object-fit: contain;
+    }
+  }
 
 
+  .reviews{
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 50px;
+    background-color: color.$primary;
+    margin: 15px 0;
+    padding: 20px;
+  }
+  .reviews::-webkit-scrollbar {
+    display: none;
+  }
+  .reviews:hover .review {
+    animation-play-state: paused; 
+  }
+  .review{
+    animation: rotate 15s infinite linear;
+    flex-shrink: 0;
+    width: 300px;
+    padding: 10px;
+    background-color: color.$secondary;
+    box-shadow: 1px 1px 15px 1px color.$secondary;
+    
+  }
 
 
+  @keyframes rotate {
+    0% {
+      transform:translateX(100px) ; 
+    }
+    100% {
+      transform:translateX(-2100px); 
+    }
+  }
   
+  .person{
+    display: flex;
+    gap: 5px;
+    img{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+
+
+  @media screen and (max-width:768px) {
+    .about-exp{
+      flex-direction: column-reverse;
+      padding: 0%;
+    }
+    .para-img{
+      width: 100%;
+      height: auto;
+      img{
+        width: 100%;
+        height: auto;
+      }
+    }
+    .para-txt{
+      width: 100%;
+      h1{
+        font-weight: 600;
+        font-size: 6vw;
+      }
+    }
+    .show-icon{
+      width: 75px;
+      height: 75px;
+    }
+  }
