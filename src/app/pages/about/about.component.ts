@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataSharedService } from 'src/app/Service/data-shared.service';
+import {Title,Meta} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-about',
@@ -9,8 +10,9 @@ import { DataSharedService } from 'src/app/Service/data-shared.service';
 export class AboutComponent implements OnInit {
   public aboutUs:any;
   public reviews:any;
-  constructor(private dataService: DataSharedService){
-
+  constructor(private dataService: DataSharedService,private title:Title,private meta :Meta){
+    this.title.setTitle("Kurston About page");  
+    this.meta.addTag({ name: 'description', content: 'Welcome to Kurston about page, your trusted source for pump motors, this page shows kurston quality' });
   }
 
 

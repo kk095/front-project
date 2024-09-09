@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { DataSharedService } from 'src/app/Service/data-shared.service';
+import {Title,Meta} from "@angular/platform-browser";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +21,9 @@ export class LoginComponent implements OnInit  {
   public errorMsg:string = "";
 
 
-  constructor(private auth:AngularFireAuth,private fb:FormBuilder,private router:Router,private dataService:DataSharedService){
+  constructor(private auth:AngularFireAuth,private fb:FormBuilder,private router:Router,private dataService:DataSharedService,private title:Title,private meta :Meta){
+    this.title.setTitle("Kurston Login");
+    this.meta.addTag({ name: 'description', content: 'Welcome to Kurston Login page, your trusted source for pump motors, This page make us family' });
     this.dataService.getSignInUser();
 
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title ,Meta} from '@angular/platform-browser';
  import {AngularFirestore} from "@angular/fire/compat/firestore"
  import {AngularFireStorage} from "@angular/fire/compat/storage"
 import { DataSharedService } from 'src/app/Service/data-shared.service';
@@ -19,8 +19,9 @@ export class HomeComponent implements OnInit {
 
   public tempUrl:string="";
 
-  constructor(private dateShared:DataSharedService){
-    
+  constructor(private dateShared:DataSharedService,private title:Title,private meta:Meta){
+    this.title.setTitle("Kurston Home");
+    this.meta.addTag({ name: 'description', content: 'Welcome to Kurston Home page, your trusted source for pump motors, This page shows wide range of our pump motor products' });
   }
   
   ngOnInit(): void {
