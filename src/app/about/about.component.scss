@@ -1,0 +1,139 @@
+@use '../../color';
+
+.about-us {
+    width: 100%;
+    position: relative;
+    overflow: hidden; /* Prevents overflow */
+  }
+  
+  .about-img {
+    width: 100%; 
+    height: auto; 
+  }
+  
+  .about-exp{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px 10px 0px ;
+    width: 100%;
+  }
+
+  .para-img{
+    width: 40%;
+    height: 40vw;
+    img{
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+
+  .para-txt{
+    width: 60%;
+    padding: 10px;
+    h1{
+      font-weight: 600;
+      font-size: 3vw;
+      line-height: 60px;
+    }
+  }
+
+
+  .show-highlight{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  .highlight{
+    width: 30%;
+    p{
+      font-weight: 600;
+    }
+  }
+  .show-icon{
+    width: 100px;
+    height: 100px;
+    img{
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+
+  .reviews{
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 50px;
+    background-color: color.$primary;
+    margin: 15px 0;
+    padding: 20px;
+  }
+  .reviews::-webkit-scrollbar {
+    display: none;
+  }
+  .reviews:hover .review {
+    animation-play-state: paused; 
+  }
+  .review{
+    animation: rotate 15s infinite linear;
+    flex-shrink: 0;
+    width: 300px;
+    padding: 10px;
+    background-color: color.$secondary;
+    box-shadow: 1px 1px 15px 1px color.$secondary;
+    
+  }
+
+
+  @keyframes rotate {
+    0% {
+      transform:translateX(100px) ; 
+    }
+    100% {
+      transform:translateX(-2100px); 
+    }
+  }
+  
+  .person{
+    display: flex;
+    gap: 5px;
+    img{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+
+
+  @media screen and (max-width:768px) {
+    .about-exp{
+      flex-direction: column-reverse;
+      padding: 0%;
+    }
+    .para-img{
+      width: 100%;
+      height: auto;
+      img{
+        width: 100%;
+        height: auto;
+      }
+    }
+    .para-txt{
+      width: 100%;
+      h1{
+        font-weight: 600;
+        font-size: 6vw;
+      }
+    }
+    .show-icon{
+      width: 75px;
+      height: 75px;
+    }
+  }

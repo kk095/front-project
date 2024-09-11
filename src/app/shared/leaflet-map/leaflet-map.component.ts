@@ -20,7 +20,7 @@ export class LeafletMapComponent implements OnInit{
     }).addTo(this.map);
 
     const customIcon = L.icon({
-      iconUrl: 'assets/images/marker.png', 
+      iconUrl: 'assets/images/marker.webp', 
       iconSize: [50, 80], 
       iconAnchor: [30, 50], 
       popupAnchor: [0, -32] 

@@ -1,0 +1,98 @@
+<div class="main-div">
+  <div class="img">
+    <img rel="preload" as="image" src="../../assets/images/login.webp" alt="kurston login image" />
+  </div>
+  <div class="login-container" *ngIf="showLoginPage">
+    <form [formGroup]="loginForm">
+      <h1>Welcome Back !</h1>
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control"
+          id="floatingInput"
+          placeholder="name@example.com"
+          formControlName="email"
+        />
+        <label for="floatingInput">Email address</label>
+    </div>
+    
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <button (click)="login()" [disabled]="loginForm.invalid">Login</button>
+      <div>
+        <span *ngIf="loginForm.controls?.['email'].invalid" class="err-msg">Email field is required</span><br>
+        <span *ngIf="loginForm.controls?.['password'].invalid" class="err-msg">Password field is required</span><br>
+        <span *ngIf="errorMsg.length>0" class="err-msg">{{errorMsg}}</span>
+      </div>
+    </form>
+    <p class="redirect">
+      Don't have an account?
+      <a (click)="onToggle('signup')" class="r-link">Signup Here</a>
+    </p>
+    <p class="redirect">
+        <a (click)="onToggle('home')" class="r-link">Back to Home</a>
+      </p>
+  </div>
+
+<div class="login-container" *ngIf="!showLoginPage">
+  <form [formGroup]="signupForm">
+    <h1>Be A Family !</h1>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Enter Your Name"
+        formControlName="name"
+      />
+      <label for="floatingInput">Your Name <span style="color: red;">*</span></label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="email"
+        class="form-control"
+        id="floatingInput"
+        placeholder="name@example.com"
+        formControlName="email"
+      />
+      <label for="floatingInput">Email address <span style="color: red;">*</span></label>
+    </div>
+    
+    <div class="form-floating">
+      <input
+        type="password"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <label for="floatingPassword">Password <span style="color: red;">*</span></label>
+    </div>
+    <button (click)="signup()" [disabled]="signupForm.invalid">
+      Create Account
+    </button>
+    <div>
+      <span *ngIf="signupForm.controls?.['name'].invalid" class="err-msg">Name field is required</span><br>
+      <span *ngIf="signupForm.controls?.['email'].errors?.['required']" class="err-msg">Email field is required</span><br>
+      <span *ngIf="signupForm.controls?.['email'].invalid" class="err-msg">Write Proper Email Address</span><br>
+      <span *ngIf="signupForm.controls?.['password'].invalid" class="err-msg">Password field is required</span><br>
+      <span *ngIf="errorMsg.length>0" class="err-msg">{{errorMsg}}</span>
+    </div>
+  </form>
+  <p class="redirect">
+    Already Have Account?
+    <a (click)="onToggle('login')" class="r-link">Login Here</a>
+  </p>
+  <p class="redirect">
+    <a (click)="onToggle('home')" class="r-link">Back to Home</a>
+  </p>
+</div>
+</div>
