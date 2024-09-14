@@ -10,6 +10,12 @@ const routes: Routes = [
   { path: 'category', loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) },
  
   { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
+ 
+  { path: 'favourite', loadChildren: () => import('./favourite/favourite.module').then(m => m.FavouriteModule) },
+ 
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+ 
+  { path: '**', loadChildren: () => import('./notfound/notfound.module').then(m => m.NotfoundModule) },
 ];
 
 @NgModule({

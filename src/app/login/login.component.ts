@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { DataSharedService } from 'src/app/Service/data-shared.service';
 import {Title,Meta} from "@angular/platform-browser";
+import { User } from '../interfaces/user';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import {Title,Meta} from "@angular/platform-browser";
 })
 export class LoginComponent implements OnInit  {
 
-  public loggedInUser:{name:string,email:string, password:string}={name:null,email:null,password:null};
+  public loggedInUser:User={id:null,name:null,email:null,role:null};
 
 
   public showLoginPage:boolean = true;

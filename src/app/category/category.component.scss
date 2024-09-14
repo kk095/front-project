@@ -1,0 +1,167 @@
+
+@use '../../color';
+
+.category{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    align-items: center;
+    padding: 25px 0;
+
+}
+h1{
+    font-weight: 600;
+}
+.cat{
+    max-width: 600px;
+    max-height: 400px;
+    width: 45%;
+    aspect-ratio: 3/1.5;
+    box-shadow: 1px 1px 10px 1px lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0 10px 10px;
+    .row1{
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+    }
+    .imgdiv{
+        width: 45%;
+        height: 100%;
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+    .txtdiv{
+        width: 55%;
+    }
+    p{
+        text-align: justify;
+        padding: 5px 10px 5px 0;
+    }
+
+    .btn{
+        background-color: color.$secondary;
+        float: right;
+        margin: 0 10px;
+    }
+}
+
+.head{
+    position: relative;
+}
+
+.indicator{
+    position: absolute;
+    color: color.$primary;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    &.left{
+        right: 50px;
+    }
+    &.right{
+        right: 25px;
+    }
+}
+
+.motor-show{
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    flex-shrink: 0;
+    height: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 20px;
+    position: relative;
+    &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+      }
+}
+
+.pump{
+    height: auto;
+    width: fit-content;
+    display: flex;
+    gap: 10px;
+    box-shadow: 1px 1px 10px 1px lightgray;
+    .img-div{
+        height: 200px;
+        width: auto;
+        img{
+            height: 100%;
+            width: auto;
+        }
+    }
+    .motor-txt{
+        width: 300px;
+    }
+    .btn-grp{
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px 10px 0;
+        align-items: center;
+        a{
+            font-size: 20px;
+            color: color.$primary;
+        }
+        .btn{
+            background-color: color.$primary;
+            color:  color.$textcolor;
+        }
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 900px) {
+    .category{
+        flex-direction: column;
+    }
+    .cat{
+        width: 90%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .category{
+        flex-direction: column;
+    }
+    .cat{
+        width: 100%;
+        max-height: unset;
+        max-width: unset;
+        flex-direction: column;
+        padding: 10px 0 10px 10px;
+        .row1{
+            flex-direction: column;
+        }
+        .imgdiv{
+            width: 80%;
+            img{
+                width: 100%;
+                height: auto;
+            }
+        }
+        .txtdiv{
+            width: 90%;
+        }
+        p{
+            text-align: justify;
+            padding: 5px 10px 5px 0;
+        }
+    
+        .btn{
+            background-color: color.$secondary;
+            float: right;
+            margin: 0 10px;
+        }
+    }
+}

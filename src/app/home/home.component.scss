@@ -71,10 +71,17 @@ box-shadow: unset;
     overflow: hidden;
 }
 
+.btn-div{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .know-more{
     background-color: color.$primary;
     color: color.$textcolor;
     border-radius: 10px;
+    font-size: 12px;
     box-shadow: 0px 0px 4px 1px lightgray;
     :hover{
         background-color: color.$secondary;
@@ -93,5 +100,19 @@ box-shadow: unset;
 @media screen and (max-width: 768px){
     .card{
         width:13rem !important;
+    }
+}
+@media screen and (max-width: 450px){
+    .all-cards{
+        width: 95%;
+    }
+    .card{
+        width:100% !important;
+    }
+    .card-title{
+        font-size: 13px;
+    }
+    .card-text{
+        font-size: 13px;
     }
 }

@@ -2,9 +2,9 @@
   <div class="contact-banner">
     <h1>Feel free to contact us whenever you need</h1>
     <p>Got a question, feedback, or just want to chat? We're all ears and ready to assist you. Feel free to Contact out to us on Customer Support number. We’re here for you!</p>
-    <button><i class="fas fa-phone-alt"></i> &nbsp; {{ContactDetails.phone}}</button>
-    <button><i class="fas fa-envelope"></i> &nbsp;{{ContactDetails.email}}</button>
-    <button><i class="fas fa-map-marker-alt"></i> &nbsp; {{ContactDetails.address}}</button>
+    <button><i class="fas fa-phone-alt"></i> &nbsp; <a href="tel:{{ContactDetails.phone}}" target="_blank">{{ContactDetails.phone}}</a></button>
+    <button><i class="fas fa-envelope"></i> &nbsp;  <a href="mailto:{{ContactDetails.email}}" target="_blank">{{ContactDetails.email}}</a></button>
+    <button><i class="fas fa-map-marker-alt"></i> &nbsp; <a href="https://www.google.com/maps/search/?api=1&query=kurston" target="_blank"> {{ContactDetails.address}} </a></button>
   </div>
 
   <div class="con-form">

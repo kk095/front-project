@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'app-residential',
+  templateUrl: './residential.component.html',
+  styleUrls: ['./residential.component.scss']
 })
-export class CategoryComponent {
+export class ResidentialComponent {
 
-  constructor(private router: Router){
-
-  }
 
   scroll(elementID: string, dir: string) {
     const scrollAmount = 200;  // The amount to scroll (can be adjusted)
@@ -37,10 +33,4 @@ export class CategoryComponent {
       }
     }
   }
-
-
-  navigate(path: string){
-    this.router.navigate(['/category/'+path]);
-  }
-
 }

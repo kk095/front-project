@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { DataSharedService } from './Service/data-shared.service';
 import { LoadingService } from './Service/loading.service';
+import { filter } from 'rxjs';
 
 
 @Component({
@@ -9,12 +10,13 @@ import { LoadingService } from './Service/loading.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'project';
   public showHeaderFooter=true;
 
-  constructor(private router:Router,private dataService:DataSharedService,public loadingService:LoadingService){
-    this.router.events.subscribe((event) => {
+  constructor(private router:Router,public dataService:DataSharedService,public loadingService:LoadingService){
+    
+    this.router.events.subscribe((event) => { 
       if (event instanceof NavigationEnd) {
         this.showHeaderFooter = !['/login'].includes(event.urlAfterRedirects);
       }
@@ -22,6 +24,8 @@ export class AppComponent {
     this.dataService.getSignInUser();
   }
 
-
+  ngOnInit(): void {
+  }
+  
 
 }

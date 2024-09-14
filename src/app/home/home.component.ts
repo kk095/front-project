@@ -60,4 +60,9 @@ export class HomeComponent implements OnInit {
   }
 
 
+  public onFavouriteClick(data){
+    console.log("onFavouriteClick", data);
+    this.dateShared.addToFavorites(data.id)
+  }
+
 }

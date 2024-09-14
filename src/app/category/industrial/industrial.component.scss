@@ -1,0 +1,136 @@
+@use '../../../color';
+
+.cat-row{
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+} 
+h1{
+    font-weight: 600;
+}
+.cat{
+    height: 250px;
+    margin: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 1px 1px 10px 1px lightgray;
+    .infodiv{
+        align-self: flex-start;
+        width: 50%;
+    }
+    h2{
+        font-weight: 600;
+    }
+    .imgdiv{
+        width: 40%;
+        height: auto;
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+    .btn{
+        background-color: color.$primary;
+        color: color.$textcolor;
+    }
+}
+
+
+.head{
+    position: relative;
+}
+
+.indicator{
+    position: absolute;
+    color: color.$primary;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    &.left{
+        right: 50px;
+    }
+    &.right{
+        right: 25px;
+    }
+}
+
+.motor-show{
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    flex-shrink: 0;
+    height: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 20px;
+    position: relative;
+    &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+      }
+}
+
+.pump{
+    height: auto;
+    width: fit-content;
+    display: flex;
+    gap: 10px;
+    box-shadow: 1px 1px 10px 1px lightgray;
+    .img-div{
+        height: 200px;
+        width: auto;
+        img{
+            height: 100%;
+            width: auto;
+        }
+    }
+    .motor-txt{
+        width: 300px;
+    }
+    .btn-grp{
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px 10px 0;
+        align-items: center;
+        a{
+            font-size: 20px;
+            color: color.$primary;
+        }
+        .btn{
+            background-color: color.$primary;
+            color:  color.$textcolor;
+        }
+    }
+}
+
+
+@media screen and (max-width: 992px) and (min-width:768px){
+ .cat{
+    height: auto;
+    flex-direction: column;
+    .img-div{
+        width: 35%;
+    }
+    .infodiv{
+        width: 100%;
+    }
+    .btn{
+        margin: 10px 0;
+    }
+ }   
+}
+@media screen and (max-width: 400px) {
+ .cat{
+    height: auto;
+    flex-direction: column;
+    .img-div{
+        width: 35%;
+    }
+    .infodiv{
+        width: 100%;
+    }
+    .btn{
+        margin: 10px 0;
+    }
+ }   
+}
