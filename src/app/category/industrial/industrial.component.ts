@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-industrial',
@@ -6,6 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./industrial.component.scss']
 })
 export class IndustrialComponent {
+
+  constructor(private router:Router){
+
+  }
+
   scroll(elementID: string, dir: string) {
     const scrollAmount = 200;  // The amount to scroll (can be adjusted)
     
@@ -30,5 +36,9 @@ export class IndustrialComponent {
         element.scrollTo({ left: newScroll, behavior: 'smooth' });
       }
     }
+  }
+
+  navigate(type: string){
+    this.router.navigate(['category/items-list'])
   }
 }

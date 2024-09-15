@@ -5,7 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { DataSharedService } from 'src/app/Service/data-shared.service';
 import {Title,Meta} from "@angular/platform-browser";
-import { User } from '../interfaces/user';
+import { User } from '../Service/interfaces/user';
 
 @Component({
   selector: 'app-login',

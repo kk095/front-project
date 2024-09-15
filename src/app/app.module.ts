@@ -13,6 +13,7 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage"
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore"
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { firebaseConfig } from 'src/firebaseconfig';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -24,13 +25,21 @@ import { firebaseConfig } from 'src/firebaseconfig';
     HttpClientModule,
     RouterModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      timeOut: 3000,
+      enableHtml: true,
+      extendedTimeOut: 1000,
+      tapToDismiss: true,
+      closeButton: true
+    }),
     SharedModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
   
   ],
   providers: [

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CategoryComponent } from './category.component';
 import { IndustrialComponent } from './industrial/industrial.component';
 import { ResidentialComponent } from './residential/residential.component';
+import { ItemsComponent } from './items/items.component';
 
 const routes: Routes = [
   { 
@@ -16,7 +17,11 @@ const routes: Routes = [
  {
   path:"residential",
   component: ResidentialComponent
- }
+ },
+ {
+  path:"items-list",
+  component: ItemsComponent
+ },
 
 ];
 

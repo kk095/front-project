@@ -5,9 +5,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { catchError, finalize, lastValueFrom, map, Observable, of, take } from 'rxjs';
 import { LoadingService } from './loading.service';
 import { Router } from '@angular/router';
-import { User,UserTable } from '../interfaces/user';
+import { User,UserTable } from './interfaces/user';
 import firebase from 'firebase/compat/app';
-import { Product } from '../interfaces/product';
+import { Product, UploadProduct } from './interfaces/product';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,8 @@ export class DataSharedService implements OnInit {
     private storage: AngularFireStorage,
     private auth:AngularFireAuth,
     private loadingService:LoadingService,
-    private router:Router
+    private router:Router,
+    private toast:ToastrService
   ) {}
 
 
@@ -38,6 +40,51 @@ export class DataSharedService implements OnInit {
                                         PRODUCTS
 
 ***************************************************************************************************************** */
+
+
+async UploadProduct(product: UploadProduct): Promise<boolean> {
+  this.loadingService.show();
+  const filePath = `products/${Date.now()}_${product.file.name}`;
+  const fileRef = this.storage.ref(filePath);
+  let uploadTask;
+
+  try {
+    uploadTask = this.storage.upload(filePath, product.file);
+    await uploadTask;
+    
+    const url = await fileRef.getDownloadURL().toPromise();
+    product.imageUrl = url;
+
+    const finalProduct: Product = {
+      category: product.category || "",
+      desc: product.desc || "",
+      imageUrl: product.imageUrl || "",
+      subcategory: product.subcategory || "",
+      title: product.title || "",
+      type: product.type || "",
+    };
+
+    await this.firestore.collection('products').add(finalProduct);
+    
+    this.loadingService.hide();
+    this.toast.success("Product uploaded successfully !", "Success");
+    return true;
+  } catch (error) {
+    console.log("Error while uploading product:", error);
+    this.toast.error("Error While Uploading Product !", "Failed");
+
+    if (uploadTask) {
+      try {
+        await this.storage.ref(filePath).delete().toPromise();
+      } catch (deleteError) {
+        console.log("Error while deleting image:", deleteError);
+      }
+    }
+
+    this.loadingService.hide();
+    return false;
+  }
+}
 
 
 async getResidentialProducts() {

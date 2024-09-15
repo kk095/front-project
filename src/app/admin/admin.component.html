@@ -1,1 +1,161 @@
-<p>admin works!</p>
+<div class="container">
+  <h2 class="text-center my-4">Admin Panel</h2>
+
+  <!-- Action Selection: Add or Delete -->
+  <div class="mb-3">
+    <label for="actionSelect" class="form-label">Select Action</label>
+    <select id="actionSelect" class="form-select" (change)="setAction($event)">
+      <option value="null">Choose Action</option>
+      <option value="add">Add Data</option>
+      <option value="delete">Delete Data</option>
+    </select>
+  </div>
+
+  <!-- Select Table for Operation -->
+  <div class="mb-3">
+    <label for="tableSelect" class="form-label">Select Table</label>
+    <select
+      id="tableSelect"
+      class="form-select"
+      [formControl]="selectedTableControl"
+    >
+      <option value="" disabled>Select Table</option>
+      <option *ngFor="let table of tables" [value]="table">{{ table }}</option>
+    </select>
+  </div>
+  <!-- Add Product Form -->
+  <form
+    *ngIf="action === 'add' && selectedTableControl.value === 'products'"
+    [formGroup]="newProductForm"
+    (ngSubmit)="onSubmitNewProduct()"
+  >
+    <h4>Add New Product</h4>
+
+    <div class="mb-3">
+      <label for="productName" class="form-label">Product Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="productName"
+        formControlName="title"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="productDesc" class="form-label">Product Description</label>
+      <textarea
+        class="form-control"
+        id="productDesc"
+        formControlName="desc"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="tableSelect" class="form-label">Select Category</label>
+      <select id="tableSelect" class="form-select" formControlName="category" (ngModelChange)="change('cat')">
+        <option value="" disabled>Select Category</option>
+        <option *ngFor="let cat of category" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+    <div class="mb-3" *ngIf="newProductForm.value.category == 'Industrial'">
+      <label for="tableSelect" class="form-label">Select Sub Category</label>
+      <select
+        id="tableSelect"
+        class="form-select"
+        formControlName="subcategory"
+        (ngModelChange)="change('sub')"
+      >
+        <option value="" disabled>Select Sub Category</option>
+        <option *ngFor="let cat of subcategory1" [value]="cat">
+          {{ cat }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3" *ngIf="newProductForm.value.category == 'Residential'">
+      <label for="tableSelect" class="form-label">Select Sub Category</label>
+      <select
+        id="tableSelect"
+        class="form-select"
+        formControlName="subcategory"
+        (ngModelChange)="change('sub')"
+      >
+        <option value="" disabled>Select Sub Category</option>
+        <option *ngFor="let cat of subcategory2" [value]="cat">
+          {{ cat }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3" *ngIf="newProductForm.value.category == 'Residential'&& newProductForm.value.subcategory=='Monoblock'">
+      <label for="type1" class="form-label">Select Type</label>
+      <select
+        id="type1"
+        class="form-select"
+        formControlName="type"
+        
+      >
+        <option value="" disabled>Select type</option>
+        <option *ngFor="let cat of type1" [value]="cat">
+          {{ cat }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3" *ngIf="newProductForm.value.category == 'Residential'&&newProductForm.value.subcategory=='Shallow Well'">
+      <label for="type2" class="form-label">Select Type</label>
+      <select
+        id="type2"
+        class="form-select"
+        formControlName="type"
+      >
+        <option value="" disabled>Select type</option>
+        <option *ngFor="let cat of type2" [value]="cat">
+          {{ cat }}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="productImage" class="form-label">Product Image</label>
+      <input
+        type="file"
+        class="form-control"
+        id="productImage"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="newProductForm.invalid || uploading || selectedFile == null"
+    >
+      Add Product
+    </button>
+  </form>
+
+  <!-- Delete Item Form -->
+  <form
+    *ngIf="action === 'delete'"
+    [formGroup]="deleteForm"
+    (ngSubmit)="onDelete()"
+  >
+    <h4>Delete Item</h4>
+
+    <div class="mb-3">
+      <label for="itemId" class="form-label">Item ID</label>
+      <input
+        type="text"
+        class="form-control"
+        id="itemId"
+        formControlName="itemIdToDelete"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-danger"
+      [disabled]="deleteForm.invalid"
+    >
+      Delete Item
+    </button>
+  </form>
+</div>

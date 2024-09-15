@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-residential',
@@ -7,6 +8,9 @@ import { Component } from '@angular/core';
 })
 export class ResidentialComponent {
 
+  constructor(private router: Router){
+
+  }
 
   scroll(elementID: string, dir: string) {
     const scrollAmount = 200;  // The amount to scroll (can be adjusted)
@@ -33,4 +37,11 @@ export class ResidentialComponent {
       }
     }
   }
+
+
+  navigate(type: string){
+    this.router.navigate(['category/items-list'])
+  }
+
+
 }
