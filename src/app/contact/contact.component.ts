@@ -24,11 +24,10 @@ export class ContactComponent implements OnInit  {
     });
   }
 
-  ngOnInit(): void {
-      this.dataService.getContactDetails().subscribe((res)=>{
-        console.log(res);
-        this.ContactDetails = res[0];
-      })
+  async ngOnInit() {
+     
+      await this.dataService.getContactData();
+      this.ContactDetails = this.dataService.contactData;
   }
 
   async formSubmit() {

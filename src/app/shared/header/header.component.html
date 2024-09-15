@@ -6,18 +6,18 @@
         </div>
         <div>
             <button *ngIf="dataShared.loggedInUser.email==null" class="login-btn" (click)="navigation('login')"><i class="far fa-user-circle"></i> &nbsp; Login</button>
-            <button *ngIf="dataShared.loggedInUser.email!=null&&dataShared.loggedInUser.name==null" class="login-btn" (click)="logout()">Unkown</button>
-            <button *ngIf="dataShared.loggedInUser.name!=null" class="login-btn" (click)="logout()">{{dataShared.loggedInUser.name}}</button>
+            <button *ngIf="dataShared.loggedInUser.email!=null&&dataShared.loggedInUser.displayName==null" class="login-btn" (click)="logout()">Unkown</button>
+            <button *ngIf="dataShared.loggedInUser.displayName!=null" class="login-btn" (click)="logout()">{{dataShared.loggedInUser.displayName}}</button>
         </div>
     </div>
     <div class="nav-div">
         <ul>
             <li (click)="navigation('home')"  [class.active]="activetab=='home'"><i class="fas fa-home"></i> &nbsp;Home</li>
             <li (click)="navigation('category')" [class.active]="activetab=='category'"><i class="fas fa-th-large"></i> &nbsp;Catagories</li>
-            <li *ngIf="dataShared.loggedInUser.id!=null&&dataShared.loggedInUser.role=='admin'" (click)="navigation('favourite')" [class.active]="activetab=='favourite'"><i class="fas fa-heart"></i> &nbsp;Favourite</li>
+            <li *ngIf="dataShared.loggedInUser.uid!=null&&dataShared.loggedInUser.role=='admin'" (click)="navigation('favourite')" [class.active]="activetab=='favourite'"><i class="fas fa-heart"></i> &nbsp;Favourite</li>
             <li (click)="navigation('about')" [class.active]="activetab=='about'"><i class="fas fa-info"></i> &nbsp; About Us</li>
             <li (click)="navigation('contact')" [class.active]="activetab=='contact'"><i class="fas fa-globe"></i>&nbsp;Contact Us</li>
-            <li *ngIf="dataShared.loggedInUser.id!=null&&dataShared.loggedInUser.role=='admin'" (click)="navigation('admin')" [class.active]="activetab=='admin'"><i class="fas fa-user-shield"></i> &nbsp;Admin</li>
+            <li *ngIf="dataShared.loggedInUser.uid!=null&&dataShared.loggedInUser.role=='admin'" (click)="navigation('admin')" [class.active]="activetab=='admin'"><i class="fas fa-user-shield"></i> &nbsp;Admin</li>
         </ul>
     </div>
   
@@ -27,10 +27,10 @@
             <ul>
                 <li (click)="navigation('home')"  [class.active]="activetab=='home'"><i class="fas fa-home"></i> &nbsp;Home</li>
                 <li (click)="navigation('category')" [class.active]="activetab=='category'"><i class="fas fa-th-large"></i> &nbsp;Catagories</li>
-                <li *ngIf="dataShared.loggedInUser.id!=null&&dataShared.loggedInUser.role!='admin'" (click)="navigation('favourite')" [class.active]="activetab=='favourite'"><i class="fas fa-heart"></i> &nbsp;Favourite</li>
+                <li *ngIf="dataShared.loggedInUser.uid!=null&&dataShared.loggedInUser.role!='admin'" (click)="navigation('favourite')" [class.active]="activetab=='favourite'"><i class="fas fa-heart"></i> &nbsp;Favourite</li>
                 <li (click)="navigation('about')" [class.active]="activetab=='about'"><i class="fas fa-info"></i> &nbsp; About Us</li>
                 <li (click)="navigation('contact')" [class.active]="activetab=='contact'"><i class="fas fa-globe"></i>&nbsp;Contact Us</li>
-                <li *ngIf="dataShared.loggedInUser.id!=null&&dataShared.loggedInUser.role=='admin'" (click)="navigation('admin')" [class.active]="activetab=='admin'"><i class="fas fa-user-shield"></i> &nbsp;Admin</li>
+                <li *ngIf="dataShared.loggedInUser.uid!=null&&dataShared.loggedInUser.role=='admin'" (click)="navigation('admin')" [class.active]="activetab=='admin'"><i class="fas fa-user-shield"></i> &nbsp;Admin</li>
             </ul>
         </div>
     </div>

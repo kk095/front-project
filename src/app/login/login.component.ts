@@ -14,9 +14,6 @@ import { User } from '../Service/interfaces/user';
 })
 export class LoginComponent implements OnInit  {
 
-  public loggedInUser:User={id:null,name:null,email:null,role:null};
-
-
   public showLoginPage:boolean = true;
 
   public errorMsg:string = "";
@@ -66,7 +63,7 @@ export class LoginComponent implements OnInit  {
     if(res.signup==false){
       this.errorMsg = res.msg;
     }else{
-      if(!!this.loggedInUser.email){
+      if(!!this.dataService.loggedInUser.email){
         this.onToggle("home");
       }else{
         this.onToggle("login");

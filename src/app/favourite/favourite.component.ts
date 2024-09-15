@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataSharedService } from '../Service/data-shared.service';
 
 @Component({
   selector: 'app-favourite',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./favourite.component.scss']
 })
 export class FavouriteComponent {
-
+ 
 }

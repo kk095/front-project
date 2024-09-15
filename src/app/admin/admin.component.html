@@ -18,11 +18,14 @@
       id="tableSelect"
       class="form-select"
       [formControl]="selectedTableControl"
+      (change)="tableChange()"
     >
       <option value="" disabled>Select Table</option>
       <option *ngFor="let table of tables" [value]="table">{{ table }}</option>
     </select>
   </div>
+
+  <hr style="margin-bottom: 10px;">
   <!-- Add Product Form -->
   <form
     *ngIf="action === 'add' && selectedTableControl.value === 'products'"
@@ -126,7 +129,7 @@
     <button
       type="submit"
       class="btn btn-primary"
-      [disabled]="newProductForm.invalid || uploading || selectedFile == null"
+      [disabled]="newProductForm.invalid || selectedFile == null"
     >
       Add Product
     </button>
@@ -134,7 +137,7 @@
 
   <!-- Delete Item Form -->
   <form
-    *ngIf="action === 'delete'"
+    *ngIf="action === 'delete' &&selectedTableControl.value === 'products'"
     [formGroup]="deleteForm"
     (ngSubmit)="onDelete()"
   >
@@ -158,4 +161,101 @@
       Delete Item
     </button>
   </form>
+
+
+  <form  *ngIf="action === 'add' && selectedTableControl.value === 'User'" [formGroup]="roleUpdateForm" (ngSubmit)="onSubmitUser()">
+    <h4>Update User Role</h4>
+    <div class="mb-3">
+      <label for="userSelect" class="form-label">Select User</label>
+      <select class="form-select" id="userSelect" formControlName="selectedUser" (click)="openuserlist()">
+        <option value="null">Choose User</option>
+        <option *ngFor="let user of userList" [value]="user.uid">
+          {{ user.displayName }} ({{ user.email }})
+        </option>
+      </select>
+    </div>
+  
+    <div class="mb-3">
+      <label for="userRole" class="form-label">Select Role</label>
+      <select class="form-select" id="userRole" formControlName="newRole">
+        <option *ngFor="let role of roles" [value]="role">
+          {{role}}
+        </option>
+      </select>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Update Role</button>
+  </form>
+
+  <form  *ngIf="action === 'add' && selectedTableControl.value === 'Poster'" >
+    <h4>Add New Poster</h4>
+  
+    <div class="mb-3">
+      <label for="posterImage" class="form-label">Upload Poster Image</label>
+      <input type="file" class="form-control" id="posterImage" (change)="onFileSelected($event)" required>
+    </div>
+    <div class="mb-3">
+      <label for="alt" class="form-label">Alt Text</label>
+      <input
+        type="text"
+        class="form-control"
+        id="alt"
+        name="alt"
+        [(ngModel)]="altText"
+      />
+    </div>
+  
+    <button  (click)="onSubmitPoster($event)" class="btn btn-primary" [disabled]="!selectedFile">Upload Poster</button>
+  </form>
+  
+  <div *ngIf="action === 'delete' && selectedTableControl.value === 'Poster'">
+    <h4>Delete Poster</h4>
+  
+    <div *ngIf="dataService.posterList.length > 0" class="row">
+      <div *ngFor="let poster of dataService.posterList" class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="poster-item card">
+          <img [src]="poster.imageUrl" alt="{{ poster.alt }}" class="poster-image card-img-top">
+          <div class="card-body text-center">
+            <button (click)="onDeletePoster(poster)" class="btn btn-danger btn-sm">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="dataService.posterList.length === 0">
+      <p>No posters found.</p>
+    </div>
+  </div>
+  
+
+<form *ngIf="action === 'add' && selectedTableControl.value === 'contact us'" [formGroup]="contactForm" (ngSubmit)="onSubmitContact()" >
+  <h4>Update Contact Information</h4>
+  
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" id="email" class="form-control" formControlName="email">
+    
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone</label>
+    <input type="text" id="phone" class="form-control" formControlName="phone">
+    
+  </div>
+
+  <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <input type="text" id="address" class="form-control" formControlName="address">
+   
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">
+    Submit
+  </button>
+</form>
+
+
+
 </div>

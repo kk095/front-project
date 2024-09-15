@@ -16,10 +16,9 @@ export class AboutComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-      this.dataService.getAboutUs().subscribe((res)=>{
-        this.aboutUs = res[0];
-      })
+  async ngOnInit() {
+      let res = await this.dataService.getAboutUs();
+      this.aboutUs = this.dataService.aboutData;
       this.dataService.getReviews().subscribe((res)=>{
         this.reviews = res;
       })
