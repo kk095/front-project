@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataSharedService } from 'src/app/Service/data-shared.service';
+import { Product } from 'src/app/Service/interfaces/product';
 
 @Component({
   selector: 'app-residential',
@@ -8,8 +10,16 @@ import { Router } from '@angular/router';
 })
 export class ResidentialComponent {
 
-  constructor(private router: Router){
+  public products:Product[]=[];
 
+  constructor(private router:Router,public dataService:DataSharedService){
+  }
+  
+  async ngOnInit() {
+    let res = await this.dataService.getProductsByCategory("Residential");
+    console.log(this.dataService.residentialProducts);
+    this.products = this.dataService.residentialProducts;
+    
   }
 
   scroll(elementID: string, dir: string) {
@@ -40,7 +50,7 @@ export class ResidentialComponent {
 
 
   navigate(type: string){
-    this.router.navigate(['category/items-list'])
+    this.router.navigate(['category/items-list'], { state: { products: this.products,subcategory:type } });
   }
 
 

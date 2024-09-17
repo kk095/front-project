@@ -14,9 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class DataSharedService implements OnInit {
-  private _posters: any = [];
   private _categories: any = [];
-  private _categoriesItems:any={}
   public loggedInUser:User={uid:null,displayName:null,email:null,role:null};
   public products:Product[]=[];
   public residentialProducts:Product[]=[];
@@ -26,6 +24,7 @@ export class DataSharedService implements OnInit {
   public contactData:any=null;
   public aboutData:any=null;
   public contactDocumentID:string=null;
+
 
   constructor(
     private firestore: AngularFirestore,
@@ -105,6 +104,36 @@ async deleteProduct(productId: string) {
     this.loadingService.hide();
     
     return false;
+  }
+}
+
+public async getProductsByCategory(category: string) {
+  if(category=="Industrial"&&this.industrialProducts.length>0) {
+    return this.industrialProducts;
+  }
+  if(category=="Residential"&&this.residentialProducts.length>0) {
+    return this.residentialProducts;
+  }
+  try {
+    // Fetch the collection where the category matches the given category
+    const snapshot = await lastValueFrom(this.firestore.collection('products', ref => ref.where('category', '==', category)).get());
+
+    // Map the documents into the desired format
+    const products = snapshot.docs.map(doc => {
+      const data = doc.data() as any;
+      const id = doc.id;
+      return { id, ...data };
+    });
+    if(category=="Residential"){
+      this.residentialProducts = products
+    }else if(category=="Industrial"){
+      this.industrialProducts = products;
+    }
+    return products; // Return the array of products
+  } catch (error) {
+    console.error("Error fetching products by category:", error);
+    // Handle the error appropriately
+    throw error; 
   }
 }
 
