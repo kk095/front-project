@@ -1,12 +1,8 @@
 <!-- data-bs-ride="carousel" -->
 <div id="carouselExampleCaptions" class="carousel slide"   data-bs-ride="carousel" data-bs-interval="3000" >
     <div class="carousel-inner">
-        <!-- <div class="carousel-item active" >
-            <img src="../../../assets/images/landingpage1.webp" class="d-block w-100"  alt="kurston welcome image">
-        </div> -->
-
             <div *ngFor="let x of DataShared.posterList; let i = index" class="carousel-item" [class.active]="i === 0">
-                <img [src]="x.imageUrl" class="d-block w-100" alt="{{x.alt}}">
+                <img [src]="x.imageUrl" height="600"  class="d-block w-100" alt="{{x.alt}}">
             </div>
     </div>
    

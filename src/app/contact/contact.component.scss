@@ -19,7 +19,7 @@
   p{
     // font-weight: 600;
     font-size: 1.5vw;
-    line-height: 50px;
+    line-height: 40px;
     text-align: center;
     margin: 10px;
   }
@@ -112,5 +112,16 @@
       form{
         width: 100%;
       }
+    }
+  }
+
+
+  @media screen and (max-width:500px) {
+    .contact-banner{
+      min-height: 550px !important;
+    }
+    p{
+      font-size: 3vw !important;
+      line-height: 20px !important;
     }
   }
