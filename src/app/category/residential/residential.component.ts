@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharedService } from 'src/app/Service/data-shared.service';
 import { Product } from 'src/app/Service/interfaces/product';
+import { UrlencriptionService } from 'src/app/Service/urlencription.service';
 
 @Component({
   selector: 'app-residential',
@@ -11,14 +12,22 @@ import { Product } from 'src/app/Service/interfaces/product';
 export class ResidentialComponent {
 
   public products:Product[]=[];
+  public Monoblockproducts:Product[]=[];
+  public Shallowproducts:Product[]=[];
 
-  constructor(private router:Router,public dataService:DataSharedService){
+  constructor(private router:Router,public dataService:DataSharedService,private urlEncriptionService:UrlencriptionService){
+
   }
   
   async ngOnInit() {
-    let res = await this.dataService.getProductsByCategory("Residential");
+    this.products = this.dataService.residentialProducts;
+    await this.dataService.getCategoryIcon("monoblock");
+    await this.dataService.getCategoryIcon("shallowWell");
+    await this.dataService.fetchMoreProducts("Residential");
     console.log(this.dataService.residentialProducts);
     this.products = this.dataService.residentialProducts;
+    this.Monoblockproducts = this.products.filter((x)=>x.subcategory=="Monoblock");
+    this.Shallowproducts = this.products.filter((x)=>x.subcategory=="Shallow Well");
     
   }
 
@@ -50,8 +59,11 @@ export class ResidentialComponent {
 
 
   navigate(type: string){
-    this.router.navigate(['category/items-list'], { state: { products: this.products,subcategory:type } });
+    this.router.navigate(['category/items-list'], { state: {subcategory:type } });
   }
 
-
+  onProductClick(data){
+    
+    this.router.navigate(['/product/',this.urlEncriptionService.encrypt(data.id)])
+  }
 }

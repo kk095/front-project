@@ -4,29 +4,31 @@
     </div>
     <div class="range-div">
         <h2>Explore Our Range</h2>
-        <div class="range-show" *ngIf="categories && categories.length > 0">
-            <ng-container   *ngFor="let x of categories;let i = index">
-                <div class="show-div"  [class.show] = "x.active ==true" (click)="categoryClick(x)"  >
-                    <img rel="preload" as="image" [src]="x.icon" alt="pump-icon">
-                    <span class="sh-name">{{x.name}}</span>
+        <div class="range-show">
+                <div class="show-div" [class.show] = "activeCategory =='Industrial'"  (click)="categoryClick('Industrial')"  >
+                    <img rel="preload" as="image" [src]="dateShared.industrialIcon" alt="pump-icon">
+                    <span class="sh-name">Industrial</span>
                 </div>
-            </ng-container>
+                <div class="show-div" [class.show] = "activeCategory =='Residential'"  (click)="categoryClick('Residential')"  >
+                    <img rel="preload" as="image" [src]="dateShared.residentialIcon" alt="pump-icon">
+                    <span class="sh-name">Residential</span>
+                </div>
             
         </div>
 
         <div class="list-header" *ngIf="activeCategory!=null&&activeCategory!=undefined">
-            <div class="list-name">{{activeCategory.name}}</div>
+            <div class="list-name">{{activeCategory}}</div>
         </div>
 
         <div class="all-cards" style="margin-left: 10px;">
-            <div class="card p-card" style="width: 18rem;" *ngFor="let x of categoryItems;let i=index">
-                <img [src]="x.url" class="card-img-top" alt="pump-img">
+            <div class="card p-card" style="width: 18rem;" *ngFor="let x of products;let i=index">
+                <img [src]="x.imageUrl" class="card-img-top" alt="pump-img">
                 <div class="card-body">
                   <h3 class="card-title" style="font-weight: 600;">{{x.title}}</h3>
-                  <p class="card-text">{{x.desc}}</p>
+                  <p class="card-text">{{x.desc | truncate:50:true}}</p>
                 </div>
                 <div class="btn-div">
-                  <a href="#" class="btn know-more">Know More</a>
+                  <a (click)="onProductClick(x)" class="btn know-more">Know More</a>
                   <button (click)="onFavouriteClick(x)" style="font-size: 20px;" class="btn favourite"><i class="far fa-heart"></i></button>
                   <!-- <a href="#" style="color: orangered; font-size: 20px;" class="btn favourite"><i class="fas fa-heart"></i></a> -->
                   

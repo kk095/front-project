@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataSharedService } from 'src/app/Service/data-shared.service';
 import { Product } from 'src/app/Service/interfaces/product';
+import { UrlencriptionService } from 'src/app/Service/urlencription.service';
 
 @Component({
   selector: 'app-industrial',
@@ -10,13 +11,21 @@ import { Product } from 'src/app/Service/interfaces/product';
 })
 export class IndustrialComponent implements OnInit {
   public products: Product[]=[];
-  constructor(private router:Router,public dataService:DataSharedService){
+  public singleProducts: Product[]=[];
+  public threeProducts: Product[]=[];
+  constructor(private router:Router,public dataService:DataSharedService,private urlEncriptionService:UrlencriptionService){
   }
   
   async ngOnInit() {
-    let res = await this.dataService.getProductsByCategory("Industrial");
+    this.products = this.dataService.industrialProducts;
+    await this.dataService.getCategoryIcon("singalPhase");
+    await this.dataService.getCategoryIcon("threePhase");
+    await this.dataService.fetchMoreProducts("Industrial");
     console.log(this.dataService.industrialProducts);
-    this.products = this.dataService.industrialProducts
+    this.products = this.dataService.industrialProducts;
+    this.singleProducts = this.products.filter((x)=>x.subcategory=="Single Phase");
+    this.threeProducts = this.products.filter((x)=>x.subcategory=="Three Phase");
+    
     
   }
 
@@ -49,5 +58,10 @@ export class IndustrialComponent implements OnInit {
   navigate(type: string){
     this.router.navigate(['category/items-list'], { state: { products: this.products,subcategory:type } });
 
+  }
+
+  onProductClick(data){
+    
+    this.router.navigate(['/product/',this.urlEncriptionService.encrypt(data.id)])
   }
 }

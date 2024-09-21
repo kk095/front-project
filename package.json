@@ -24,6 +24,7 @@
     "@coreui/coreui": "^5.1.2",
     "@types/leaflet": "^1.9.12",
     "bootstrap": "^5.3.3",
+    "crypto-js": "^4.2.0",
     "leaflet": "^1.9.4",
     "ngx-toastr": "^16.2.0",
     "rxjs": "~7.8.0",

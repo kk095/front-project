@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataSharedService } from 'src/app/Service/data-shared.service';
 import { Product } from 'src/app/Service/interfaces/product';
+import { UrlencriptionService } from 'src/app/Service/urlencription.service';
 
 @Component({
   selector: 'app-items',
@@ -9,124 +11,42 @@ import { Product } from 'src/app/Service/interfaces/product';
 })
 export class ItemsComponent {
   public products : Product[] = [];
+  public ShowProducts :Product[] = [];
   public subcategory:string;
-  constructor(private router: Router) { }
+  constructor(private router: Router,private dataService:DataSharedService,private urlEncriptionService:UrlencriptionService) { }
 
   ngOnInit(): void {
     // Retrieve the products array passed via router state
-    this.products = history.state.products || [];
     this.subcategory = history.state.subcategory || null;
     console.log("subcategory received:", this.subcategory);
-    this.products = this.products.filter((e)=>e.subcategory.toLowerCase()==this.subcategory.toLowerCase());
-    console.log("Products:", this.products);
+    if(this.subcategory=="single phase"||this.subcategory=="three phase"){
+      this.products = this.dataService.industrialProducts;
+      if(this.subcategory=="single phase"){
+        this.ShowProducts = this.products.filter((x)=>x.subcategory=="Single Phase");
+      }else{
+        this.ShowProducts = this.products.filter((x)=>x.subcategory=="Three Phase");
+      }
+      
+    }else if(this.subcategory=="Monoblock"||this.subcategory=="shallow well"){
+      this.products = this.dataService.residentialProducts;
+      
+      if(this.subcategory=="Monoblock"){
+        this.ShowProducts = this.products.filter((x)=>x.subcategory=="Monoblock");
+      }else{
+        this.ShowProducts = this.products.filter((x)=>x.subcategory=="Shallow Well");
+        
+      }
+
+    }
+    console.log(this.ShowProducts);
+    
   }
 
-  products2 = [
-    {
-      title: 'Product 1',
-      description: 'This is the description for product 1.',
-      image: 'https://via.placeholder.com/150'  // Replace with actual image URL
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      title: 'Product 2',
-      description: 'This is the description for product 2.',
-      image: 'https://via.placeholder.com/150'
-    },
-    // Add more products here
-  ];
+
+  onProductClick(data){
+    
+    this.router.navigate(['/product/',this.urlEncriptionService.encrypt(data.id)])
+  }
+
+
 }

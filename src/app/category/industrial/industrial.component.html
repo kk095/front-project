@@ -4,7 +4,7 @@
         <div class="cat col-md-5">
           <div class="imgdiv">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2Felectric-motor_6077878.png?alt=media&token=10d227b6-60a0-40b3-9880-687ffe4b9b70"
+              [src]="dataService.singalPhaseIcon"
               alt="Monoblock motor Image"
               width="40%"
               height="auto"
@@ -22,7 +22,7 @@
         <div class="cat col-md-5">
           <div class="imgdiv">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2Felectric-motor_6077878.png?alt=media&token=10d227b6-60a0-40b3-9880-687ffe4b9b70"
+              [src]="dataService.threePhaseIcon"
               alt="shallow well motor Image"
               width="40%"
               height="auto"
@@ -46,71 +46,20 @@
       <a  (click)="scroll('singlephase','right')" class="indicator right"><i class="fas fa-chevron-right"></i></a>
   </div>
   <div id="singlephase" class="motor-show">
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
+    <div class="pump" *ngFor="let x of singleProducts;let i=index">
+        <div class="img-div">
+            <img [src]="x.imageUrl" alt="Industrial Motor image">
+        </div>
+        <div class="motor-txt">
+            <h2>{{x.title}}</h2>
+            <p>{{x.desc|truncate:70:true}}</p>
+            <div class="btn-grp">
+                <button (click)="onProductClick(x)" class="btn btn-sm">Know More</button>
+                <a class="fav"><i class="far fa-heart"></i></a>
+            </div>
+        </div>
+    </div>
+     
   </div>
     <div class="head">
       <h1>Three Phase</h1>
@@ -118,71 +67,19 @@
       <a  (click)="scroll('threephase','right')" class="indicator right"><i class="fas fa-chevron-right"></i></a>
   </div>
   <div id="threephase" class="motor-show">
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
-      <div class="pump">
-          <div class="img-div">
-              <img src="https://firebasestorage.googleapis.com/v0/b/kruston-25bbb.appspot.com/o/category%2FFlowking%2F2.webp?alt=media&token=11e6d70e-7736-4146-9fdd-1832ecf9e18a" alt="Industrial Motor image">
-          </div>
-          <div class="motor-txt">
-              <h2>Flow King (0.5 HP)-II</h2>
-              <p>it adapts seamlessly to various power inputs. Backed by a solid 1-year warranty.They provide reliable and efficient performance, making everyday tasks easier and more efficient</p>
-              <div class="btn-grp">
-                  <button class="btn">Know More</button>
-                  <a class="fav"><i class="far fa-heart"></i></a>
-              </div>
-          </div>
-      </div>
+    <div class="pump" *ngFor="let x of threeProducts;let i=index">
+        <div class="img-div">
+            <img [src]="x.imageUrl" alt="Industrial Motor image">
+        </div>
+        <div class="motor-txt">
+            <h2>{{x.title}}</h2>
+            <p>{{x.desc|truncate:70:true}}</p>
+            <div class="btn-grp">
+                <button (click)="onProductClick(x)" class="btn btn-sm">Know More</button>
+                <a class="fav"><i class="far fa-heart"></i></a>
+            </div>
+        </div>
+    </div>
   </div>
   
   </div>

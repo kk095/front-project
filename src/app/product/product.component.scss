@@ -1,0 +1,168 @@
+@use '../../color';
+
+.img-div{
+    height: 300px;
+    overflow: hidden;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.share{
+    font-size: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.details{
+    padding: 10px;
+    box-shadow: 1px 1px 10px 1px lightgray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
+button{
+    outline: none;
+    border: none;
+    width:fit-content;
+    background-color: color.$primary;
+    padding: 10px 20px;
+    color: color.$textcolor;
+    i{
+        color: color.$secondary;
+    }
+}
+
+.price{
+    font-size: 20px;
+    font-weight: 600;
+    color: color.$primary;
+    width:fit-content;
+    padding: 5px;
+    margin: 20px 0;
+    .gst{
+        font-size: 8px;
+        font-style: italic;
+    }
+}
+
+.branding{
+    padding: 30px 10px;
+    background-color: color.$primary;
+    color: color.$secondary;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    i{
+        font-size: 30px;
+    }
+    .row{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+}
+
+
+.head{
+    position: relative;
+    margin-top: 20px;
+}
+
+.indicator{
+    position: absolute;
+    color: color.$primary;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    &.left{
+        right: 50px;
+    }
+    &.right{
+        right: 25px;
+    }
+}
+
+.motor-show{
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    flex-shrink: 0;
+    height: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 20px;
+    position: relative;
+    &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+      }
+}
+
+h3,h5{
+    color: gray;
+}
+
+.pump{
+    height: 150px;
+    width: 350px;
+    display: flex;
+    flex-shrink: 0;
+    gap: 10px;
+    box-shadow: 1px 1px 10px 1px lightgray;
+    .img-div{
+        height:100%;
+        width: 30%;
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+    }
+    .motor-txt{
+        width: 70%;
+        height: 100%;
+        h2{
+            font-size: 15px;
+        }
+    }
+    .btn-grp{
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px 10px 0;
+        align-items: center;
+        a{
+            font-size: 20px;
+            color: color.$primary;
+        }
+        .btn{
+            background-color: color.$primary;
+            color:  color.$textcolor;
+        }
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .branding{
+        padding:5px;        
+        font-size: 10px;
+        i{
+            font-size: 15px;
+        }
+        .row{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+    }
+    
+}

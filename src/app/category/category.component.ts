@@ -1,15 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataSharedService } from '../Service/data-shared.service';
+import { Product } from '../Service/interfaces/product';
+import { UrlencriptionService } from '../Service/urlencription.service';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
+  public residentialProducts:Product[]=[];
+  public industrialProducts:Product[]=[];
+  constructor(private router: Router,public dataService:DataSharedService,private urlEncriptionService:UrlencriptionService){
+  }
 
-  constructor(private router: Router){
-
+  async ngOnInit() {
+      await this.dataService.getCategoryIcon("Industrial");
+      await this.dataService.getCategoryIcon("Residential");
+      await this.dataService.fetchInitialProducts("Industrial");
+      await this.dataService.fetchInitialProducts("Residential");
+      this.residentialProducts = this.dataService.residentialProducts;
+      this.industrialProducts = this.dataService.industrialProducts;
   }
 
   scroll(elementID: string, dir: string) {
@@ -41,6 +53,12 @@ export class CategoryComponent {
 
   navigate(path: string){
     this.router.navigate(['/category/'+path]);
+
+  }
+
+  onProductClick(data){
+    
+    this.router.navigate(['/product/',this.urlEncriptionService.encrypt(data.id)])
   }
 
 }

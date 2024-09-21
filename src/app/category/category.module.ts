@@ -6,7 +6,7 @@ import { CategoryComponent } from './category.component';
 import { ResidentialComponent } from './residential/residential.component';
 import { IndustrialComponent } from './industrial/industrial.component';
 import { ItemsComponent } from './items/items.component';
-import { TruncatePipe } from '../Service/truncate.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -16,11 +16,11 @@ import { TruncatePipe } from '../Service/truncate.pipe';
     ResidentialComponent,
     IndustrialComponent,
     ItemsComponent,
-    TruncatePipe
   ],
   imports: [
     CommonModule,
     CategoryRoutingModule,
+    SharedModule
   ]
 })
 export class CategoryModule { }

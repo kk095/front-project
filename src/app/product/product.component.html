@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="row">
+        <div class="img-div col-md-5">
+            <img [src]="product?.imageUrl" alt="Industrial Motor image">
+        </div>
+        <div class="details col-md-7">
+            <span class="share"><i (click)="onShareClick()" class="fas fa-share-alt"></i></span>
+            <h1>{{product?.title}}</h1>
+            <h3> Category : <span style="font-weight: 600;">{{product?.category}}</span></h3>
+            <h5>SubCategory : <span style="font-weight: 600;">{{product?.subcategory}}</span></h5>
+            <div class="price">
+                <span>MRP ₹</span> <span>12,999</span> <br> <span class="gst">excluding GST & other taxes *</span>
+            </div>
+            <button><i class="fas fa-phone-volume"></i>  &nbsp; <a href="tel:+91 99588 81921" target="_blank">CALL TO BUY +91 99588 81921</a></button>
+        </div>
+    </div>
+    <div class="branding row">
+        <div class="col-4">
+            <div class="col-md-1">
+                <i class="fas fa-star-half-alt"></i> 
+            </div>
+            <div class="col-md-11">
+                Top Branded Products
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="col-md-1">
+                <i class="fas fa-certificate"></i>
+            </div>
+            <div class="col-md-11">
+                Product Warranty
+            </div>
+           
+        </div>
+        <div class=" col-4">
+            <div class="col-md-1">
+                <i class="fab fa-instalod"></i>
+            </div>
+            <div class="col-md-11">
+                Service & Installation
+            </div>
+           
+        </div>
+    </div>
+    <div class="row">
+        <h2>Description</h2>
+        <p>
+            {{product?.desc}}
+        </p>
+    </div>
+
+    <div class="head">
+        <h1>Similar Products</h1>
+        <a (click)="scroll('industrial','left')" class="indicator left"><i class="fas fa-chevron-left"></i></a>
+        <a  (click)="scroll('industrial','right')" class="indicator right"><i class="fas fa-chevron-right"></i></a>
+    </div>
+    <div id="industrial" class="motor-show">
+        <div class="pump" *ngFor="let x of similarProducts;let i=index">
+            <div class="img-div">
+                <img [src]="x.imageUrl" alt="Industrial Motor image">
+            </div>
+            <div class="motor-txt">
+                <h2>{{x.title}}</h2>
+                <p>{{x.desc|truncate:70:true}}</p>
+                <div class="btn-grp">
+                    <button (click)="onProductClick(x)" class="btn btn-sm">Know More</button>
+                    <a class="fav"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>

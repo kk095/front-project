@@ -6,6 +6,7 @@ export interface Product{
     category: string;
     subcategory: string;
     type: string;
+    timestamp?: any;
 }
 export interface UploadProduct{
     title: string;

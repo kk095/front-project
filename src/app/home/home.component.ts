@@ -3,6 +3,9 @@ import { Title ,Meta} from '@angular/platform-browser';
  import {AngularFirestore} from "@angular/fire/compat/firestore"
  import {AngularFireStorage} from "@angular/fire/compat/storage"
 import { DataSharedService } from 'src/app/Service/data-shared.service';
+import { Router } from '@angular/router';
+import { UrlencriptionService } from '../Service/urlencription.service';
+import { Product } from '../Service/interfaces/product';
 
 @Component({
   selector: 'app-home',
@@ -11,54 +14,47 @@ import { DataSharedService } from 'src/app/Service/data-shared.service';
 })
 export class HomeComponent implements OnInit {
 
-  public categories=[]
-
-  public categoryItems=[];
-
-  public activeCategory:any;
+  public products:Product[]=[];
+  public activeCategory:string="Industrial";
 
   public tempUrl:string="";
 
-  constructor(private dateShared:DataSharedService,private title:Title,private meta:Meta){
+  constructor(public dateShared:DataSharedService,private title:Title,private meta:Meta,private router:Router,private urlEncriptionService:UrlencriptionService) {
     this.title.setTitle("Kurston Home");
     this.meta.addTag({ name: 'description', content: 'Welcome to Kurston Home page, your trusted source for pump motors, This page shows wide range of our pump motor products' });
   }
   
-  ngOnInit(): void {
-    this.getCategories();
+  async ngOnInit() {
+    await this.dateShared.getCategoryIcon("Industrial");
+    await this.dateShared.getCategoryIcon("Residential");
+    await this.dateShared.fetchInitialProducts(this.activeCategory);
+    if(this.activeCategory=="Industrial"){
+      this.products = this.dateShared.industrialProducts;
+    }else if(this.activeCategory=="Residential"){
+      this.products = this.dateShared.residentialProducts;
+    }
     
   }
   
-  getCategories(){
-      this.dateShared.getCategory().subscribe(data =>{
-        this.categories = data;
-        this.activeCategory = data.filter((x)=>x.active==true)[0];
-        this.getCategoryItems(this.activeCategory);
-      })
+ 
+
+ 
+
+  async categoryClick(data:any){
+    this.activeCategory = data;
+    await this.dateShared.fetchInitialProducts(this.activeCategory);
+    if(this.activeCategory=="Industrial"){
+      this.products = this.dateShared.industrialProducts;
+    }else if(this.activeCategory=="Residential"){
+      this.products = this.dateShared.residentialProducts;
+    }
+    
   }
 
-  getCategoryItems(data){
-    this.dateShared.getCategoryItems(data).subscribe((data)=>{
-      console.log(data);
-      this.categoryItems = data;
-    })
+  onProductClick(data){
+    
+    this.router.navigate(['/product/',this.urlEncriptionService.encrypt(data.id)])
   }
-
-  categoryClick(data:any){
-    console.log(data);
-    this.getCategoryItems(data);
-    this.categories = this.categories.map((x)=>{
-      if(x.id==data.id){
-        x.active = true;
-        this.activeCategory = x;
-      }else{
-        x.active = false
-      }
-      return x
-    })
-
-  }
-
 
   public onFavouriteClick(data){
     console.log("onFavouriteClick", data);

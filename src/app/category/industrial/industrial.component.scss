@@ -71,21 +71,27 @@ h1{
 }
 
 .pump{
-    height: auto;
-    width: fit-content;
+    height: 150px;
+    width: 350px;
     display: flex;
+    flex-shrink: 0;
     gap: 10px;
     box-shadow: 1px 1px 10px 1px lightgray;
     .img-div{
-        height: 200px;
-        width: auto;
+        height:100%;
+        width: 30%;
         img{
             height: 100%;
-            width: auto;
+            width: 100%;
+            object-fit: contain;
         }
     }
     .motor-txt{
-        width: 300px;
+        width: 70%;
+        height: 100%;
+        h2{
+            font-size: 15px;
+        }
     }
     .btn-grp{
         display: flex;
