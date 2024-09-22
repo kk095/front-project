@@ -46,6 +46,7 @@ export class DataSharedService implements OnInit {
   public threePhaseIcon: string = null;
   public monoblockIcon: string = null;
   public shallowWellIcon: string = null;
+  public favouriteProducts:Product[]=[];
 
   constructor(
     private firestore: AngularFirestore,
@@ -325,7 +326,7 @@ export class DataSharedService implements OnInit {
   }
 
   // Helper function to extract file path from Firebase Storage URL
-  getFilePathFromUrl(url: string): string {
+  private getFilePathFromUrl(url: string): string {
     const baseUrl = 'https://firebasestorage.googleapis.com/v0/b/'; // base Firebase storage URL
     const filePath = decodeURIComponent(
       url.split('?')[0].split(baseUrl)[1].split('/o/')[1]
@@ -385,6 +386,11 @@ export class DataSharedService implements OnInit {
 ***************************************************************************************************************** */
 
   async addToFavorites(productId: string) {
+    if(!!this.loggedInUser?.uid==false){
+      this.router.navigate(['/login']);
+      this.toast.info("Login First to add Favourite products!","Info");
+      return;
+    }
     try {
       const favoritesRef = this.firestore
         .collection('favorites')
@@ -395,52 +401,111 @@ export class DataSharedService implements OnInit {
         },
         { merge: true }
       );
+      this.toast.success("Product Added in Favorites Successfully !","Success")
       console.log('favourite adding:', res);
     } catch (e) {
+      this.toast.error("Failed To Add in Favourite !","Error")
       console.log(e);
     }
   }
 
-  removeFromFavorites(productId: string) {
-    return this.firestore
-      .collection('favorites')
-      .doc(this.loggedInUser.uid)
-      .update({
-        productIds: firebase.firestore.FieldValue.arrayRemove(productId), // Correct Firebase FieldValue usage
-      });
+  async getFavoriteProducts() {
+    if(!!this.loggedInUser?.uid==false){
+      await this.getSignInUser()
+    }
+    try {
+      const favoritesRef = this.firestore.collection('favorites').doc(this.loggedInUser.uid);
+      
+      const doc = await lastValueFrom(favoritesRef.get())
+      
+      if (doc.exists) {
+        const favoriteData:any = doc.data();
+        const favoriteProductIds: string[] = favoriteData.productIds || [];
+  
+        if (favoriteProductIds.length === 0) {
+          return [];
+        }
+  
+        // Step 2: Fetch product details using the favorite product IDs
+        const productDetails = [];
+        for (let productId of favoriteProductIds) {
+          const productDoc = await lastValueFrom(this.firestore.collection('products').doc(productId).get());
+          if (productDoc.exists) {
+            const productData:any = productDoc.data();
+            productDetails.push({
+          id: productId,  // Bind the id here
+          ...productData
+        });
+      }else {
+            console.log(`Product with ID ${productId} not found.`);
+          }
+        }
+        this.favouriteProducts=productDetails;
+        console.log(this.favouriteProducts);
+        
+        return productDetails; 
+      } else {
+        return [];
+      }
+    } catch (e) {
+      console.log('Error fetching favorite products:', e);
+      this.loadingService.hide();
+      return [];
+    }
   }
+  
+
+  async removeFromFavorites(productId: string) {
+    try {
+      await this.firestore
+        .collection('favorites')
+        .doc(this.loggedInUser.uid)
+        .update({
+          productIds: firebase.firestore.FieldValue.arrayRemove(productId),
+        });
+        this.toast.success("Product removed from favorites successfully !","Success")
+        return true;
+      } catch (error) {
+        this.toast.error("Product removed failed !","Error");
+        console.log(error);
+        
+        return false;
+    }
+  }
+  
 
   /****************************************************************************************************************** 
                                         AUTHENTICATION
 
 ***************************************************************************************************************** */
+async getSignInUser() {
+  try {
+    const user = await lastValueFrom(this.auth.user.pipe(take(1)))
+    if (user) {
+      this.loggedInUser.uid = user.uid;
+      this.loggedInUser.email = user.email;
+      this.loggedInUser.displayName = user.displayName;
 
-  getSignInUser() {
-    //this.loadingService.show();
-    this.auth.user.subscribe((user) => {
-      if (user) {
-        this.loggedInUser.uid = user.uid;
-        this.loggedInUser.email = user.email;
-        this.loggedInUser.displayName = user.displayName;
-        this.firestore
-          .collection('users')
-          .doc(user.uid)
-          .get()
-          .subscribe((userTable) => {
-            const userData = userTable.data() as UserTable | undefined;
-            if (!!userData) {
-              this.loggedInUser.role = userData.role;
-            }
-            if (this.router.url == '/login') {
-              this.router.navigate(['']);
-            }
-          });
-        console.log('logged user :', this.loggedInUser);
-      } else {
-        //this.loadingService.hide();
+      // Fetch the user data from Firestore
+      const userTable = await this.firestore.collection('users').doc(user.uid).get().toPromise();
+      const userData = userTable.data() as UserTable | undefined;
+      
+      if (!!userData) {
+        this.loggedInUser.role = userData.role;
       }
-    });
+
+      // If the user is on the login page, navigate to the home page
+      if (this.router.url === '/login') {
+        this.router.navigate(['']);
+      }
+
+      console.log('logged user:', this.loggedInUser);
+    }
+  } catch (error) {
+    console.log('Error fetching signed-in user:', error);
   }
+}
+
 
   async login(form: any) {
     this.loadingService.show();
@@ -547,6 +612,23 @@ export class DataSharedService implements OnInit {
     } catch (error) {
       this.toast.success('Fail updating User role ', 'Error');
       console.error('Error updating user role:', error);
+    }
+  }
+
+
+  async forgetPassword(email){
+    if (!email) {
+      this.toast.error('Please enter your email.');
+      return;
+    }
+
+    try {
+      await this.auth.sendPasswordResetEmail(email);
+      this.toast.success('Password reset email sent. Please check your inbox.');
+    } catch (error) {
+      this.toast.error(error.message, 'Failed to send password reset email.');
+      this.toast.error("Please Enter Correct Email !", 'Failed');
+      console.error("Error in sending password reset email:", error);
     }
   }
 

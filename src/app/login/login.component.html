@@ -2,7 +2,7 @@
   <div class="img">
     <img rel="preload" as="image" src="../../assets/images/login.webp" alt="kurston login image" />
   </div>
-  <div class="login-container" *ngIf="showLoginPage">
+  <div class="login-container" *ngIf="showLoginPage&&!showForgetPage">
     <form [formGroup]="loginForm">
       <h1>Welcome Back !</h1>
       <div class="form-floating mb-3">
@@ -28,8 +28,8 @@
       </div>
       <button (click)="login()" [disabled]="loginForm.invalid">Login</button>
       <div>
-        <span *ngIf="loginForm.controls?.['email'].invalid" class="err-msg">Email field is required</span><br>
-        <span *ngIf="loginForm.controls?.['password'].invalid" class="err-msg">Password field is required</span><br>
+        <span *ngIf="loginForm.controls?.['email'].invalid&&loginForm.controls['email'].touched" class="err-msg">Email field is required</span><br>
+        <span *ngIf="loginForm.controls?.['password'].invalid&&loginForm.controls?.['password'].touched" class="err-msg">Password field is required</span><br>
         <span *ngIf="errorMsg.length>0" class="err-msg">{{errorMsg}}</span>
       </div>
     </form>
@@ -38,11 +38,15 @@
       <a (click)="onToggle('signup')" class="r-link">Signup Here</a>
     </p>
     <p class="redirect">
+      Forget password?
+      <a (click)="onToggle('forget')" class="r-link">Reset Password</a>
+    </p>
+    <p class="redirect">
         <a (click)="onToggle('home')" class="r-link">Back to Home</a>
       </p>
   </div>
 
-<div class="login-container" *ngIf="!showLoginPage">
+<div class="login-container" *ngIf="!showLoginPage&&!showForgetPage">
   <form [formGroup]="signupForm">
     <h1>Be A Family !</h1>
     <div class="form-floating mb-3">
@@ -80,10 +84,10 @@
       Create Account
     </button>
     <div>
-      <span *ngIf="signupForm.controls?.['name'].invalid" class="err-msg">Name field is required</span><br>
-      <span *ngIf="signupForm.controls?.['email'].errors?.['required']" class="err-msg">Email field is required</span><br>
-      <span *ngIf="signupForm.controls?.['email'].invalid" class="err-msg">Write Proper Email Address</span><br>
-      <span *ngIf="signupForm.controls?.['password'].invalid" class="err-msg">Password field is required</span><br>
+      <span *ngIf="signupForm.controls?.['name'].invalid&&signupForm.controls?.['name'].touched" class="err-msg">Name field is required</span><br>
+      <span *ngIf="signupForm.controls?.['email'].errors?.['required']&&signupForm.controls?.['email'].touched" class="err-msg">Email field is required</span><br>
+      <span *ngIf="signupForm.controls?.['email'].invalid&&signupForm.controls?.['email'].touched" class="err-msg">Write Proper Email Address</span><br>
+      <span *ngIf="signupForm.controls?.['password'].invalid&&signupForm.controls?.['password'].touched" class="err-msg">Password field is required</span><br>
       <span *ngIf="errorMsg.length>0" class="err-msg">{{errorMsg}}</span>
     </div>
   </form>
@@ -91,8 +95,23 @@
     Already Have Account?
     <a (click)="onToggle('login')" class="r-link">Login Here</a>
   </p>
+  
   <p class="redirect">
     <a (click)="onToggle('home')" class="r-link">Back to Home</a>
+  </p>
+</div>
+<div class="login-container" *ngIf="showForgetPage">
+  <form>
+    <div class="form-group">
+      <label for="email">Enter your email:</label>
+      <input type="email" id="email" [(ngModel)]="Forgetemail" name="email" class="form-control" required>
+    </div>
+    <button (click)="onForgotPassword()" class="btn btn-dark">Reset Password</button>
+  </form>
+  
+  <p class="redirect">
+    Already Have Account?
+    <a (click)="onToggle('login')" class="r-link">Login Here</a>
   </p>
 </div>
 </div>

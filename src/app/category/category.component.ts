@@ -61,4 +61,8 @@ export class CategoryComponent implements OnInit {
     this.router.navigate(['/product/',this.urlEncriptionService.encrypt(data.id)])
   }
 
+  public onFavouriteClick(data){
+    this.dataService.addToFavorites(data.id)
+  }
+
 }

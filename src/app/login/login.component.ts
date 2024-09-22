@@ -15,6 +15,8 @@ import { User } from '../Service/interfaces/user';
 export class LoginComponent implements OnInit  {
 
   public showLoginPage:boolean = true;
+  public showForgetPage:boolean= false;
+  public Forgetemail=null;
 
   public errorMsg:string = "";
 
@@ -72,12 +74,22 @@ export class LoginComponent implements OnInit  {
   }
 
   onToggle(page){
+    console.log("forget",page);
     if(page=="login"){
       this.showLoginPage=true;
     }else if(page=="signup"){
       this.showLoginPage=false;
-    }else if("home"){
+    }else if(page=="home"){
       this.router.navigate(['']);
+    }else if(page=="forget"){
+      
+      this.showForgetPage=true;
+
     }
+  }
+  async onForgotPassword(){
+    this.showForgetPage=false;
+    this.onToggle("login");
+    this.dataService.forgetPassword(this.Forgetemail);
   }
 }

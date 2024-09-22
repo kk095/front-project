@@ -1,0 +1,21 @@
+/* Ensure the card content is aligned and spaced properly */
+.card {
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Add hover effect */
+  }
+  
+  /* Ensuring consistent image height */
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  /* Shadow on cards for better visual depth */
+  .card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  

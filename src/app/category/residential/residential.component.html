@@ -55,7 +55,7 @@
             <p>{{x.desc|truncate:70:true}}</p>
             <div class="btn-grp">
                 <button (click)="onProductClick(x)" class="btn btn-sm">Know More</button>
-                <a class="fav"><i class="far fa-heart"></i></a>
+                <a (click)="onFavouriteClick(x)" class="fav"><i class="far fa-heart"></i></a>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@
             <p>{{x.desc|truncate:70:true}}</p>
             <div class="btn-grp">
                 <button (click)="onProductClick(x)" class="btn btn-sm">Know More</button>
-                <a class="fav"><i class="far fa-heart"></i></a>
+                <a (click)="onFavouriteClick(x)" class="fav"><i class="far fa-heart"></i></a>
             </div>
         </div>
     </div>

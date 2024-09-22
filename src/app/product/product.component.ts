@@ -107,4 +107,8 @@ export class ProductComponent implements OnInit {
       alert('Web Share API not supported in your browser. Use the share buttons below.');
     }
   }
+
+  addFavorite(){
+    this.dataService.addToFavorites(this.productID)
+  }
 }
