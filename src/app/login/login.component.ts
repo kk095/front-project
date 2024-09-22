@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit  {
     console.log("forget",page);
     if(page=="login"){
       this.showLoginPage=true;
+      this.showForgetPage = false;
     }else if(page=="signup"){
       this.showLoginPage=false;
     }else if(page=="home"){
