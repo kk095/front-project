@@ -13,6 +13,7 @@ export class ProductComponent implements OnInit {
   public productID: string = null;
   public product: Product=null;
   public similarProducts:Product[]= [];
+  public isFavourite: boolean = false;
   constructor(
     private urlEncriptionService: UrlencriptionService,
     private route: ActivatedRoute,
@@ -28,9 +29,6 @@ export class ProductComponent implements OnInit {
 
   async ngOnInit() {
       await this.getproduct();
-      console.log(this.router.url);
-      console.log(window.location.href);
-      
   }
 
 
@@ -41,6 +39,7 @@ export class ProductComponent implements OnInit {
     let res = await this.dataService.fetchProductDetails(this.productID);
     this.product = res;
     window.scrollTo(0, 0);
+    this.isFavourite =await this.dataService.isProductInFavorites(this.productID);
     if(this.product.category=="Industrial"){
       if(this.dataService.industrialProducts.length>0){
         this.similarProducts = this.dataService.industrialProducts;
@@ -108,7 +107,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  addFavorite(){
-    this.dataService.addToFavorites(this.productID)
+  addFavorite(id=null){
+    if(!!id){
+      this.dataService.addToFavorites(id);
+    }else{
+      this.dataService.addToFavorites(this.productID);
+    }
   }
 }

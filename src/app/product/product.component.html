@@ -5,8 +5,13 @@
         </div>
         <div class="details col-md-7">
             <div class="row">
+                <span class="col-12" style="color: gray; font-size: 12px;">{{product?.id}}</span>
+                
+            </div>
+            <div class="row">
                 <span class="col-10 share"><i (click)="onShareClick()" class="fas fa-share-alt"></i></span>
-                <span class="col-2 share"><i (click)="addFavorite()" class="far fa-heart"></i></span>
+                <span *ngIf="!isFavourite" class="col-2 share"><i (click)="addFavorite()" class="far fa-heart"></i></span>
+                <span *ngIf="isFavourite" style="color: orangered;" class="col-2 share"><i class="fas fa-heart"></i></span>
 
             </div>
             <h1>{{product?.title}}</h1>
@@ -68,7 +73,7 @@
                 <p>{{x.desc|truncate:70:true}}</p>
                 <div class="btn-grp">
                     <button (click)="onProductClick(x)" class="btn btn-sm">Know More</button>
-                    <a class="fav"><i class="far fa-heart"></i></a>
+                    <a class="fav"><i (click)="addFavorite(x.id)" class="far fa-heart"></i></a>
                 </div>
             </div>
         </div>

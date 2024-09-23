@@ -473,6 +473,26 @@ export class DataSharedService implements OnInit {
     }
   }
   
+  async isProductInFavorites(productId: string): Promise<boolean> {
+    try {
+      const favoritesRef = this.firestore.collection('favorites').doc(this.loggedInUser.uid);
+      
+      // Get the user's favorites document
+      const doc = await lastValueFrom(favoritesRef.get())
+  
+      if (doc.exists) {
+        const data:any = doc.data();
+        // Check if productId exists in the productIds array
+        return data?.productIds.includes(productId);
+      } else {
+        return false; // No favorites document found for the user
+      }
+    } catch (error) {
+      console.error('Error checking product in favorites:', error);
+      return false;
+    }
+  }
+  
 
   /****************************************************************************************************************** 
                                         AUTHENTICATION
@@ -556,6 +576,7 @@ async getSignInUser() {
       }
       this.toast.success('Account Created Successfully !', 'Success');
       this.loadingService.hide();
+      this.getSignInUser();
     } catch (err) {
       console.error('Error creating user:', err);
       this.toast.error('Failed in Account Creating !', 'Error');
