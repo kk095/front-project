@@ -4,7 +4,6 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   catchError,
-  finalize,
   lastValueFrom,
   map,
   Observable,
@@ -24,7 +23,8 @@ import { ToastrService } from 'ngx-toastr';
 export class DataSharedService implements OnInit {
   private ResidentiallastVisible: any = null; 
   private IndustriallastVisible: any = null; 
-  private batchSize = 10; 
+  private batchSize = 5; 
+  public IsAllProducts:boolean = false;
   private _categories: any = [];
   public loggedInUser: User = {
     uid: null,
@@ -89,7 +89,26 @@ export class DataSharedService implements OnInit {
         timestamp: firebase.firestore.FieldValue.serverTimestamp() 
       };
 
-      await this.firestore.collection('products').add(finalProduct);
+      const productRef = await this.firestore.collection('products').add(finalProduct);
+
+      const additionalDetails = product.additionalDetails;
+      const customFields = Object.keys(additionalDetails)
+        .filter(key => key.startsWith('field'))
+        .reduce((acc, key, index) => {
+          const fieldIndex = Math.floor(index / 2);
+          if (!acc[fieldIndex]) acc[fieldIndex] = {};
+          if (key.includes('_name')) {
+            acc[fieldIndex].name = additionalDetails[key];
+          } else {
+            acc[fieldIndex].value = additionalDetails[key];
+          }
+          return acc;
+        }, []);
+
+        await this.firestore.collection('productDetails').doc(productRef.id).set({
+          price: additionalDetails.price,
+          customFields: customFields,
+        });
 
       this.loadingService.hide();
       this.toast.success('Product uploaded successfully !', 'Success');
@@ -100,7 +119,7 @@ export class DataSharedService implements OnInit {
 
       if (uploadTask) {
         try {
-          await this.storage.ref(filePath).delete().toPromise();
+          await lastValueFrom(this.storage.ref(filePath).delete())
         } catch (deleteError) {
           console.log('Error while deleting image:', deleteError);
         }
@@ -113,20 +132,52 @@ export class DataSharedService implements OnInit {
 
   async deleteProduct(productId: string) {
     try {
+  
+      // Show loading indicator
       this.loadingService.show();
-      await this.firestore.collection('products').doc(productId).delete();
-
+  
+      // Get the product document reference
+      const productDocRef = this.firestore.collection('products').doc(productId);
+      const productDoc = await lastValueFrom(productDocRef.get());
+  
+      let filePath = null;
+      if (productDoc.exists) {
+        const data: any = productDoc.data();
+  
+        // Get the file path from imageUrl for deletion from Firebase Storage
+        if (data.imageUrl) {
+          filePath = await this.getFilePathFromUrl(data.imageUrl);
+        }
+      }
+  
+      // Delete the product document
+      await productDocRef.delete();
+  
+      // Delete the associated product details by productId
+      const productDetailsDocRef = this.firestore.collection('productDetails').doc(productId);
+      await productDetailsDocRef.delete();
+  
+      // Delete image from Firebase Storage if filePath exists
+      if (filePath) {
+        await lastValueFrom(this.storage.ref(filePath).delete());
+      }
+  
+      // Hide loading spinner and show success message
       this.loadingService.hide();
-      this.toast.success('Product deleted successfully !', 'success');
+      this.toast.success('Product and its details deleted successfully!', 'Success');
       return true;
+  
     } catch (error) {
-      this.toast.error('Product delete Failed !', 'Error');
-      console.error('Error deleting product:', error);
+      // Handle error during deletion
+      this.toast.error('Product delete failed!', 'Error');
+  
+      // Hide loading spinner in case of error
       this.loadingService.hide();
-
       return false;
     }
   }
+  
+  
 
   async fetchInitialProducts(category: string) {
     if(category=="Industrial"&&this.industrialProducts.length>0) {
@@ -157,12 +208,10 @@ export class DataSharedService implements OnInit {
         this.ResidentiallastVisible = snapshot.docs[snapshot.docs.length - 1];
       }else if(category=="Industrial"){
         this.IndustriallastVisible = snapshot.docs[snapshot.docs.length - 1];
-        console.log(this.IndustriallastVisible);
         
       }
       return products;
     } catch (error) {
-      console.error('Error fetching initial products:', error);
       return [];
     }
   }
@@ -170,56 +219,74 @@ export class DataSharedService implements OnInit {
   async fetchMoreProducts(category: string) {
     try {
       let lastVisible;
-      if(category=="Residential"){
+      if (category === "Residential") {
         lastVisible = this.ResidentiallastVisible;
-      }else if(category=="Industrial"){
+      } else if (category === "Industrial") {
         lastVisible = this.IndustriallastVisible;
       }
-      if(!!lastVisible==false){
+  
+      if (!!lastVisible == false) {
         await this.fetchInitialProducts(category);
       }
-      if (lastVisible) {
-        const snapshot = await lastValueFrom(this.firestore.collection('products', ref => 
-          ref.where('category', '==', category)
-             .orderBy('timestamp','desc')
-             .startAfter(lastVisible) // Start after the last product from the previous batch
-             .limit(this.batchSize)
-        ).get());
   
-        const products = snapshot.docs.map((doc:any) => ({
-          id: doc.id, 
+      if (lastVisible) {
+        const snapshot = await lastValueFrom(
+          this.firestore.collection('products', ref =>
+            ref.where('category', '==', category)
+              .orderBy('timestamp', 'desc')
+              .startAfter(lastVisible) // Start after the last product from the previous batch
+              .limit(this.batchSize)
+          ).get()
+        );
+  
+        const products = snapshot.docs.map((doc: any) => ({
+          id: doc.id,
           ...doc.data()
         }));
-
-        if(category=="Residential"){
-          this.residentialProducts=[...this.residentialProducts, ...products];
-          this.ResidentiallastVisible = snapshot.docs[snapshot.docs.length - 1];
-        }else if(category=="Industrial"){
-          this.industrialProducts=[...this.industrialProducts, ...products];;
-          this.IndustriallastVisible = snapshot.docs[snapshot.docs.length - 1];
+  
+        if (products.length > 0) {
+          // Update products list and lastVisible based on category
+          if (category === "Residential") {
+            this.residentialProducts = [...this.residentialProducts, ...products];
+            this.ResidentiallastVisible = snapshot.docs[snapshot.docs.length - 1];
+          } else if (category === "Industrial") {
+            this.industrialProducts = [...this.industrialProducts, ...products];
+            this.IndustriallastVisible = snapshot.docs[snapshot.docs.length - 1];
+          }
+          return products;
+        } else {
+          // No more products found
+          this.IsAllProducts = true;
+          return [];
         }
-        // Update the last visible document for the next batch
-        console.log("next batch",products);
-        
-        return products;
       }
-      return []; // No more products
+  
+      // If lastVisible is null, all products have been fetched
+      this.IsAllProducts = true;
+      return [];
     } catch (error) {
-      console.error('Error fetching more products:', error);
       return [];
     }
   }
+  
   
 
     async fetchProductDetails(id: string): Promise<any> {
       try {
         const productDocRef = this.firestore.collection('products').doc(id);
+        const detailsRef = this.firestore.collection('productDetails').doc(id);
         
         const productDoc = await lastValueFrom(productDocRef.get());
+        const detailDoc = await lastValueFrom(detailsRef.get());
         
         if (productDoc.exists) {
           const productData:any = productDoc.data();
-          return { id: productDoc.id, ...productData };
+          if(detailDoc.exists){
+            return { id: productDoc.id, ...productData,additionalDetails: detailDoc.data()};
+            
+          }else{
+            return { id: productDoc.id, ...productData};
+          }
         } else {
           return null;
 
@@ -380,24 +447,7 @@ export class DataSharedService implements OnInit {
     }
   }
 
-  async fetchMessages(): Promise<any[]> {
-    try {
-      // Use await to wait for Firestore response
-      const snapshot = await lastValueFrom(this.firestore.collection('messages').get());
-      
-      // Map through the documents and extract data
-      const messages = snapshot.docs.map((doc:any) => ({
-        id: doc.id,
-        ...doc.data() // Spread the document data into an object
-      }));
-
-      console.log('Fetched messages:', messages);
-      return messages;
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-      throw error;
-    }
-  }
+  
 
   /****************************************************************************************************************** 
                                         Favourite
@@ -421,7 +471,6 @@ export class DataSharedService implements OnInit {
         { merge: true }
       );
       this.toast.success("Product Added in Favorites Successfully !","Success")
-      console.log('favourite adding:', res);
     } catch (e) {
       this.toast.error("Failed To Add in Favourite !","Error")
       console.log(e);
@@ -455,19 +504,15 @@ export class DataSharedService implements OnInit {
           id: productId,  // Bind the id here
           ...productData
         });
-      }else {
-            console.log(`Product with ID ${productId} not found.`);
-          }
+      }
         }
         this.favouriteProducts=productDetails;
-        console.log(this.favouriteProducts);
         
         return productDetails; 
       } else {
         return [];
       }
     } catch (e) {
-      console.log('Error fetching favorite products:', e);
       this.loadingService.hide();
       return [];
     }
@@ -538,7 +583,6 @@ async getSignInUser() {
         this.router.navigate(['']);
       }
 
-      console.log('logged user:', this.loggedInUser);
     }
   } catch (error) {
     console.log('Error fetching signed-in user:', error);
@@ -637,7 +681,6 @@ async getSignInUser() {
             role: user.role,
           };
         });
-        console.log('list:', this.userList);
       }
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -687,12 +730,33 @@ async getSignInUser() {
     }
   }
 
+  async fetchMessages(): Promise<any[]> {
+    try {
+      // Use await to wait for Firestore response
+      const snapshot = await lastValueFrom(this.firestore.collection('messages').get());
+      
+      // Map through the documents and extract data
+      const messages = snapshot.docs.map((doc:any) => ({
+        id: doc.id,
+        ...doc.data() // Spread the document data into an object
+      }));
+
+      return messages;
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      throw error;
+    }
+  }
+
   /****************************************************************************************************************** 
                                         ABOUT US 
 
 ***************************************************************************************************************** */
 
   public async getAboutUs() {
+    if(!!this.aboutData){
+      return this.aboutData;
+    }
     try {
       // Fetch the collection data
       const snapshot = await lastValueFrom(
@@ -705,7 +769,6 @@ async getSignInUser() {
         const id = doc.id;
         return { id, ...data };
       });
-      console.log(aboutUsData);
       this.aboutData = aboutUsData[0];
       return aboutUsData[0];
     } catch (error) {
@@ -713,6 +776,29 @@ async getSignInUser() {
       // Handle the error appropriately
       throw error; // Rethrow or handle the error as needed
     }
+  }
+
+  public async UpdateAbout(data:any){
+    try {
+      this.loadingService.show();
+
+      // Update the Firestore document
+      if (!!this.aboutData.id == false) {
+        await this.getAboutUs();
+      }
+      await this.firestore
+        .collection('about')
+        .doc(this.aboutData.id)
+        .update(data);
+
+      this.toast.success('About info updated successfully!', 'Success');
+      this.loadingService.hide();
+    } catch (error) {
+      console.error('Error updating About:', error);
+      this.toast.error('Error updating About !', 'Error');
+      this.loadingService.hide();
+    }
+
   }
 
   public getReviews(): Observable<any[]> {
@@ -732,53 +818,7 @@ async getSignInUser() {
       );
   }
 
-  public getCategory(): Observable<any[]> {
-    if (this._categories.length > 0) {
-      return of(this._categories);
-    }
-    //this.loadingService.show();
-    return this.firestore
-      .collection('/categories')
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((action) => {
-            const data = action.payload.doc.data() as any;
-            const id = action.payload.doc.id;
-            //this.loadingService.hide();
-            this._categories = [...this._categories, { id, ...data }];
-            return { id, ...data };
-          })
-        )
-      );
-  }
-
-  public getCategoryItems(data): Observable<any[]> {
-    //this.loadingService.show();
-    let url = '/categories/' + data.id + '/items';
-
-    return this.firestore
-      .collection(url)
-      .snapshotChanges()
-      .pipe(
-        map((actions) => {
-          if (actions.length === 0) {
-            //this.loadingService.hide();
-          }
-          return actions.map((action) => {
-            const newdata = action.payload.doc.data() as any;
-            const id = action.payload.doc.id;
-            //this.loadingService.hide();
-            return { id, ...newdata };
-          });
-        }),
-        catchError((error) => {
-          //this.loadingService.hide();
-          console.error('Error fetching category items:', error);
-          return of([]);
-        })
-      );
-  }
+ 
 
   /****************************************************************************************************************** 
                                         CATEGORY 

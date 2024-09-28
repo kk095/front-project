@@ -24,7 +24,6 @@ export class ResidentialComponent {
     await this.dataService.getCategoryIcon("monoblock");
     await this.dataService.getCategoryIcon("shallowWell");
     await this.dataService.fetchMoreProducts("Residential");
-    console.log(this.dataService.residentialProducts);
     this.products = this.dataService.residentialProducts;
     this.Monoblockproducts = this.products.filter((x)=>x.subcategory=="Monoblock");
     this.Shallowproducts = this.products.filter((x)=>x.subcategory=="Shallow Well");

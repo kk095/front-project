@@ -17,10 +17,13 @@
             <h1>{{product?.title}}</h1>
             <h3> Category : <span style="font-weight: 600;">{{product?.category}}</span></h3>
             <h5>SubCategory : <span style="font-weight: 600;">{{product?.subcategory}}</span></h5>
-            <div class="price">
-                <span>MRP ₹</span> <span>12,999</span> <br> <span class="gst">excluding GST & other taxes *</span>
+            <div *ngIf="product?.additionalDetails?.price" class="price">
+                <span>MRP ₹</span> <span>{{product.additionalDetails.price}}</span> <br> <span class="gst">excluding GST & other taxes *</span>
             </div>
-            <button><i class="fas fa-phone-volume"></i>  &nbsp; <a href="tel:+91 99588 81921" target="_blank">CALL TO BUY +91 99588 81921</a></button>
+            <div *ngIf="!product?.additionalDetails?.price" class="price">
+                <span>Contact For Price</span> ( <span style="color: grey; font-size: 10px;">Price Not Reveal</span>)
+            </div>
+            <button><i class="fas fa-phone-volume"></i>  &nbsp; <a href="tel:+91 99588 81921" target="_blank">CALL TO BUY {{ContactDetails?.phone}}</a></button>
         </div>
     </div>
     <div class="branding row">
@@ -56,6 +59,18 @@
         <p>
             {{product?.desc}}
         </p>
+    </div>
+
+    <div *ngIf="product?.additionalDetails?.customFields" class="row">
+        <h2>Additional Product Details</h2>
+        <div class="row my-3" *ngFor="let x of product.additionalDetails.customFields;let i=index;">
+                <div class="col-md-5" style="font-weight: 600; border-left: 5px solid black;">
+                    {{x.name}}
+                </div>
+                <div class="col-md-5">
+                    {{x.value}}
+                </div>
+        </div>
     </div>
 
     <div class="head">

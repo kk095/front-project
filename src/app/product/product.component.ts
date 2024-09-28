@@ -14,6 +14,7 @@ export class ProductComponent implements OnInit {
   public product: Product=null;
   public similarProducts:Product[]= [];
   public isFavourite: boolean = false;
+  public ContactDetails:any;
   constructor(
     private urlEncriptionService: UrlencriptionService,
     private route: ActivatedRoute,
@@ -29,6 +30,9 @@ export class ProductComponent implements OnInit {
 
   async ngOnInit() {
       await this.getproduct();
+      await this.dataService.getContactData();
+      this.ContactDetails = this.dataService.contactData;
+      
   }
 
 

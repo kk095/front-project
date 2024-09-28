@@ -1,4 +1,4 @@
-<div class="container">\
+<div class="container">
   <div class="row">
     <button class="btn btn-warning" (click)="viewMessage()"><i class="fas fa-eye"></i> Click To View User Message</button>
   </div>
@@ -32,8 +32,7 @@
  
   
   <!-- Add Product Form -->
-  <form
-    *ngIf="action === 'add' && selectedTableControl.value === 'products'"
+  <form *ngIf="action === 'add' && selectedTableControl.value === 'products'"
     [formGroup]="newProductForm"
     (ngSubmit)="onSubmitNewProduct()"
   >
@@ -130,6 +129,32 @@
         (change)="onFileSelected($event)"
       />
     </div>
+    <div class="mb-3" formGroupName="additionalDetails">
+      <label for="price" class="form-label">Price</label>
+      <input formControlName="price" type="number"  class="form-control" />
+  
+      <div *ngFor="let field of additionalFields; let i = index" class="custom-field  my-2" style="border: 1px dashed grey; padding: 5px;">
+        <div class="field-container">
+          <input
+            type="text"
+            placeholder="Field Name"
+            class="form-control"
+            [formControlName]="'field' + i + '_name'"
+          />
+          <input
+            type="text"
+            placeholder="Field Value"
+            class="form-control"
+            [formControlName]="'field' + i + '_value'"
+          />
+          <button type="button" style="background: none; outline: none; border: none;" class="remove-btn" (click)="removeCustomField(i)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </div>
+  
+      <button type="button" class="mt-2" style="float: right;" (click)="addCustomField()">Add Custom Field</button>
+    </div>
 
     <button
       type="submit"
@@ -141,8 +166,7 @@
   </form>
 
   <!-- Delete Item Form -->
-  <form
-    *ngIf="action === 'delete' &&selectedTableControl.value === 'products'"
+  <form *ngIf="action === 'delete' &&selectedTableControl.value === 'products'"
     [formGroup]="deleteForm"
     (ngSubmit)="onDelete()"
   >
@@ -257,6 +281,34 @@
   </div>
 
   <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">
+    Submit
+  </button>
+</form>
+<form *ngIf="action === 'add' && selectedTableControl.value === 'About us'" [formGroup]="AboutForm" (ngSubmit)="onSubmitAbout()" >
+  <h4>Update About Information</h4>
+  
+  <div class="mb-3">
+    <label for="p1" class="form-label">Para 1</label>
+    <textarea
+    class="form-control"
+    rows="10"
+    id="p1"
+    formControlName="p1"
+  ></textarea>
+    
+  </div>
+  <div class="mb-3">
+    <label for="p2" class="form-label">Para 2</label>
+    <textarea
+    rows="10"
+    class="form-control"
+    id="p2"
+    formControlName="p2"
+  ></textarea>
+    
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="AboutForm.invalid">
     Submit
   </button>
 </form>

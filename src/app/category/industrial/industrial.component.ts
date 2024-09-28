@@ -21,7 +21,6 @@ export class IndustrialComponent implements OnInit {
     await this.dataService.getCategoryIcon("singalPhase");
     await this.dataService.getCategoryIcon("threePhase");
     await this.dataService.fetchMoreProducts("Industrial");
-    console.log(this.dataService.industrialProducts);
     this.products = this.dataService.industrialProducts;
     this.singleProducts = this.products.filter((x)=>x.subcategory=="Single Phase");
     this.threeProducts = this.products.filter((x)=>x.subcategory=="Three Phase");

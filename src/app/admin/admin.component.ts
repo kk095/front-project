@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
-import { finalize } from 'rxjs';
 import { DataSharedService } from '../Service/data-shared.service';
 import { User } from '../Service/interfaces/user';
 import { Router } from '@angular/router';
@@ -31,8 +27,10 @@ export class AdminComponent {
 
   deleteForm: FormGroup;
   newProductForm: FormGroup;
+  additionalFields: any[] = [];
   roleUpdateForm: FormGroup;
   contactForm: FormGroup;
+  AboutForm: FormGroup;
   selectedTableControl: FormControl;
 
 
@@ -55,7 +53,11 @@ export class AdminComponent {
       category: ['', Validators.required],
       subcategory: ['', Validators.required],
       type: [''],
-      imageUrl: [''] 
+      imageUrl: [''] ,
+      additionalDetails: this.fb.group({
+        price: [''],
+        // Custom fields are added dynamically
+      }),
     });
 
     this.roleUpdateForm = this.fb.group({
@@ -67,6 +69,10 @@ export class AdminComponent {
       phone: [''],
       address:['']
     });
+    this.AboutForm = this.fb.group({
+      p1: [''],
+      p2: [''],
+    });
 
     // Initialize the selected table form control
     this.selectedTableControl = new FormControl('', Validators.required);
@@ -75,6 +81,7 @@ export class AdminComponent {
   // To set the current action (Add/Delete)
   setAction(action:any) {
     this.action = action.target.value;
+    this.selectedTableControl.setValue(null);
   }
 
   async tableChange(){
@@ -87,6 +94,12 @@ export class AdminComponent {
         email:this.dataService.contactData.email,
         address:this.dataService.contactData.address
       })
+    }else if(this.action=="add"&&this.selectedTableControl.value=="About us"){
+      await this.dataService.getAboutUs();
+      this.AboutForm.patchValue({
+        p1:this.dataService.aboutData.p1,
+        p2:this.dataService.aboutData.p2,
+      })
     }
   }
 
@@ -98,14 +111,31 @@ export class AdminComponent {
     }
   }
 
+  removeCustomField(index: number) {
+    const customFields = this.newProductForm.get('additionalDetails') as FormGroup;
+    customFields.removeControl('field' + index + '_name');
+    customFields.removeControl('field' + index + '_value');
+
+    this.additionalFields.splice(index, 1);
+  }
+
+  addCustomField() {
+    const customFields = this.newProductForm.get('additionalDetails') as FormGroup;
+    const index = this.additionalFields.length;
+    customFields.addControl('field' + index + '_name', new FormControl(''));
+    customFields.addControl('field' + index + '_value', new FormControl(''));
+
+    this.additionalFields.push({ name: '', value: '' });
+  }
+
   async onSubmitNewProduct() {
+    
     if (this.newProductForm.valid) {
       let formData = this.newProductForm.value;
       formData = {...formData,file:this.selectedFile};
       let res =await this.dataService.UploadProduct(formData);
       if(res){
         this.newProductForm.reset();
-        console.log("product uploaded successfully");
       }
     }
   }
@@ -116,7 +146,6 @@ export class AdminComponent {
       const itemIdToDelete = this.deleteForm.value.itemIdToDelete;
       this.dataService.deleteProduct(itemIdToDelete);
     } else {
-      console.log('Form is invalid');
     }
   }
 
@@ -157,8 +186,10 @@ export class AdminComponent {
   }
 
   onSubmitContact(){
-    console.log(this.contactForm);
     this.dataService.UpdateContact(this.contactForm.value);
+  }
+  onSubmitAbout(){
+    this.dataService.UpdateAbout(this.AboutForm.value);
   }
 
   public viewMessage(){

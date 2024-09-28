@@ -7,6 +7,7 @@ export interface Product{
     subcategory: string;
     type: string;
     timestamp?: any;
+    additionalDetails?:any;
 }
 export interface UploadProduct{
     title: string;
@@ -16,6 +17,7 @@ export interface UploadProduct{
     subcategory: string;
     type: string;
     file:File|null;
+    additionalDetails:any;
 }
 
 export interface Poster{

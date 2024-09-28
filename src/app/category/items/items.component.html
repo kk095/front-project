@@ -1,7 +1,7 @@
 <div class="container mt-4">
     <div class="row">
       <!-- Example of a card item -->
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let product of ShowProducts">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 " *ngFor="let product of ShowProducts">
         <div class="card h-100 shadow-sm">
           <img [src]="product.imageUrl" class="card-img-top" alt="Product image">
           <div class="card-body d-flex flex-column">
@@ -13,5 +13,8 @@
         </div>
       </div>
     </div>
+    <button *ngIf="loading" class="btn btn-warning" style="margin: 25px auto; margin-left: 40%;" (click)="loadMore()">
+      Load More Product...
+    </button>
   </div>
   

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { lastValueFrom } from 'rxjs';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataSharedService } from 'src/app/Service/data-shared.service';
 import {Title,Meta} from "@angular/platform-browser";
-import { User } from '../Service/interfaces/user';
 
 @Component({
   selector: 'app-login',
@@ -74,7 +72,6 @@ export class LoginComponent implements OnInit  {
   }
 
   onToggle(page){
-    console.log("forget",page);
     if(page=="login"){
       this.showLoginPage=true;
       this.showForgetPage = false;

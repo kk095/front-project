@@ -32,7 +32,6 @@ export class ContactComponent implements OnInit  {
 
   async formSubmit() {
     if (this.contactForm.valid) {
-      console.log('Form Submitted', this.contactForm.value);
       let res = await this.dataService.PostMessage(this.contactForm.value);
       if(!!res.id){
         this.showDataSentMessage();
@@ -52,7 +51,6 @@ export class ContactComponent implements OnInit  {
   }
 
   inputFocus(){
-    console.log("focus input");
     this.errorShow=false
     
   }

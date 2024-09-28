@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { DataSharedService } from './Service/data-shared.service';
 import { LoadingService } from './Service/loading.service';
-import { filter } from 'rxjs';
 
 
 @Component({
@@ -21,10 +20,10 @@ export class AppComponent implements OnInit {
         this.showHeaderFooter = !['/login'].includes(event.urlAfterRedirects);
       }
     });
-    this.dataService.getSignInUser();
   }
-
-  ngOnInit(): void {
+  
+  async ngOnInit() {
+    await this.dataService.getSignInUser();
   }
   
 

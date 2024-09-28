@@ -20,7 +20,6 @@ export class FavouriteComponent implements OnInit {
     async ngOnInit() {
       await this.dataService.getFavoriteProducts();
       this.products = this.dataService.favouriteProducts;
-      console.log(this.products);
       
     } 
 
@@ -31,9 +30,7 @@ export class FavouriteComponent implements OnInit {
     this.router.navigate(['/product/',this.urlEncriptionService.encrypt(data.id)])
   }
 
-  async removeFavourite(data){
-    console.log(data);
-    
+  async removeFavourite(data){    
     await this.dataService.removeFromFavorites(data.id)
     await this.dataService.getFavoriteProducts();
     this.products = this.dataService.favouriteProducts;

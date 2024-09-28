@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title ,Meta} from '@angular/platform-browser';
- import {AngularFirestore} from "@angular/fire/compat/firestore"
- import {AngularFireStorage} from "@angular/fire/compat/storage"
 import { DataSharedService } from 'src/app/Service/data-shared.service';
 import { Router } from '@angular/router';
 import { UrlencriptionService } from '../Service/urlencription.service';

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import {  Router } from '@angular/router';
 import { DataSharedService } from '../Service/data-shared.service';
 
 @Component({
