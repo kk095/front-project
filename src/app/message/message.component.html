@@ -1,0 +1,56 @@
+<div class="container">
+    <kendo-grid  style="margin: 25px 0;" [data]="gridData" [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort"
+    [filter]="state.filter" [sortable]="true" [pageable]="true" [reorderable]="true" filterable="menu"
+    (dataStateChange)="dataStateChange($event)"
+    [resizable]="true">
+    <ng-template kendoGridToolbarTemplate>
+        <button kendoGridPDFCommand [svgIcon]="filePdfIcon">
+          Export to PDF
+        </button>
+      </ng-template>
+        <kendo-grid-column field="id" title="ID"> </kendo-grid-column>
+        <kendo-grid-column field="name" title="Name"> </kendo-grid-column>
+        <kendo-grid-column field="email" title="Email">
+        </kendo-grid-column>
+        <kendo-grid-column field="message" title="User Message"> </kendo-grid-column>
+        <kendo-grid-pdf
+        fileName="user-messages.pdf"
+        [allPages]="true"
+        paperSize="A4"
+        [repeatHeaders]="true"
+        [landscape]="true"
+        [scale]="0.8"
+      >
+        <!-- Margin settings -->
+        <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
+    
+        <!-- Custom PDF Template -->
+        <ng-template
+          kendoGridPDFTemplate
+          let-pageNum="pageNum"
+          let-totalPages="totalPages"
+        >
+          <!-- First Page Header with Logo and Company Name -->
+          <div class="page-template">
+            <div class="header">
+              <h3>Kurston</h3>
+            </div>
+            <div class="first-page-details" *ngIf="pageNum === 1" style="text-align: center">
+                <h1>User Messages Report</h1>
+              </div>
+            <div class="footer">
+                <div>
+                    <p>Date: {{ currentDate | date: 'mediumDate' }}</p>
+                </div>
+                <div style="float: right;">
+                    Page {{ pageNum }} of {{ totalPages }}
+                </div>
+            </div>
+          </div>
+    
+          <!-- Add company info on first page -->
+          
+        </ng-template>
+      </kendo-grid-pdf>
+    </kendo-grid>
+</div>

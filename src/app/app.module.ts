@@ -14,6 +14,8 @@ import {AngularFirestoreModule} from "@angular/fire/compat/firestore"
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { firebaseConfig } from 'src/firebaseconfig';
 import { ToastrModule } from 'ngx-toastr';
+import { GridModule } from '@progress/kendo-angular-grid';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { ToastrModule } from 'ngx-toastr';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    GridModule,
   
   ],
   providers: [

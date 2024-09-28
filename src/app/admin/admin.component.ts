@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { finalize } from 'rxjs';
 import { DataSharedService } from '../Service/data-shared.service';
 import { User } from '../Service/interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -39,7 +40,8 @@ export class AdminComponent {
 
   constructor(
     private fb: FormBuilder,
-    public dataService: DataSharedService
+    public dataService: DataSharedService,
+    private router : Router
   ) {
     // Initialize the delete form
     this.deleteForm = this.fb.group({
@@ -157,5 +159,9 @@ export class AdminComponent {
   onSubmitContact(){
     console.log(this.contactForm);
     this.dataService.UpdateContact(this.contactForm.value);
+  }
+
+  public viewMessage(){
+    this.router.navigate(['/message']);
   }
 }

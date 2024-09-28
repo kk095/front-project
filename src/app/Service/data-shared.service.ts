@@ -380,6 +380,25 @@ export class DataSharedService implements OnInit {
     }
   }
 
+  async fetchMessages(): Promise<any[]> {
+    try {
+      // Use await to wait for Firestore response
+      const snapshot = await lastValueFrom(this.firestore.collection('messages').get());
+      
+      // Map through the documents and extract data
+      const messages = snapshot.docs.map((doc:any) => ({
+        id: doc.id,
+        ...doc.data() // Spread the document data into an object
+      }));
+
+      console.log('Fetched messages:', messages);
+      return messages;
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      throw error;
+    }
+  }
+
   /****************************************************************************************************************** 
                                         Favourite
 
